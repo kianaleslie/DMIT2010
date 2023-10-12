@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+
+//controls the behaviour of a die
 public class DiceButton : MonoBehaviour
 {
     [SerializeField] Dice parentDice;

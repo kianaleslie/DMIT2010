@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
+//handles dice rolls, tracking the player's score, and controlling the game's state
 public class DiceGameManager : MonoBehaviour
 {
     public Dice[] Dicelist;

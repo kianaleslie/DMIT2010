@@ -5,15 +5,13 @@ using TMPro;
 using UnityEngine.UIElements;
 using UnityEngine.SearchService;
 
+
+//handle rolling the die and updating its sprite 
 public class Dice : MonoBehaviour
 {
-    [HideInInspector]
+    /*[HideInInspector]*/
     [SerializeField] Sprite[] DiceSprites;
-
-
-
-    [SerializeField, Tooltip("The face value of the die.")]
-    public int m_dieValue;
+    [SerializeField, Tooltip("The face value of the die.")] public int dieValue;
 
 
     public int RollToRandomSide()

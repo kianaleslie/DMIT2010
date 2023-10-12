@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
+//handles the UI elements related to the game's goals and combinations
 public class GoalGUIManager : MonoBehaviour
 {
     
@@ -33,7 +35,7 @@ public class GoalGUIManager : MonoBehaviour
     {
         foreach (ClaimButton button in goalButtons)
         {
-            if (!button.m_goalClaimed) 
+            if (!button.goalClaimed) 
             {
                 button.GetComponent<Button>().interactable = true;
             }

@@ -4,13 +4,13 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
+
+//controls the behaviour of the buttons
 public class ClaimButton : MonoBehaviour
 {
-    [SerializeField,HideInInspector]
-    TMP_Text buttonText;
-    [SerializeField,HideInInspector]
-    Button thisClaimButton;
-    public bool m_goalClaimed = false;
+    [SerializeField/*,HideInInspector*/] TMP_Text buttonText;
+    [SerializeField/*,HideInInspector*/] Button thisClaimButton;
+    public bool goalClaimed = false;
 
     private void Awake()
     {
@@ -19,7 +19,7 @@ public class ClaimButton : MonoBehaviour
 
     public void Claim()
     {
-        m_goalClaimed = true;
+        goalClaimed = true;
         buttonText.text = "Claimed";
         thisClaimButton.interactable = false;
     }

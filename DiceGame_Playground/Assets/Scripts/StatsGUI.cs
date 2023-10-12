@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+
+//handles UI elements that display stats and scores
 public class StatsGUI : MonoBehaviour
 {
     [SerializeField] TMP_Text scoreText;
