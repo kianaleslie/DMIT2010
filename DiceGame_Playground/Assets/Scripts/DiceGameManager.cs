@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -77,5 +78,20 @@ public class DiceGameManager : MonoBehaviour
             }
             rollsLeft = rollsMax;
         }
+    }
+    public List<int> DiceValuesList()
+    {
+        List<int> diceValues = new List<int>();
+
+        foreach (var dice in Dicelist)
+        {
+            diceValues.Add(dice.dieValue);
+        }
+
+        return diceValues;
+    }
+    public int CountDiceWithValueList(List<int> diceValues, int value)
+    {
+        return diceValues.Count(v => v == value);
     }
 }
