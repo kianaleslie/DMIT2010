@@ -10,15 +10,16 @@ public class DiceGameManager : MonoBehaviour
 {
     public Dice[] Dicelist;
     public DiceButton[] KeepDiceButtons;
-    
-    public bool isRolling;
-
     public static DiceGameManager Instance;
+    public AIScript ai;
+
+    public bool isRolling;
+    public bool isPlayerTurn;
 
     public int rollCount = 0;
     public int score = 0;
     public int rollsLeft = 0;
-    private int rollsMax = 1;
+    private int rollsMax = 3;
 
     private void Awake()
     {
@@ -34,7 +35,6 @@ public class DiceGameManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
     public void Roll()
     {
         if (!isRolling)
@@ -42,7 +42,6 @@ public class DiceGameManager : MonoBehaviour
             StartCoroutine(RollAllDice());
         }
     }
-
     IEnumerator RollAllDice()
     {
         isRolling = true;
@@ -50,8 +49,7 @@ public class DiceGameManager : MonoBehaviour
         GoalGUIManager.Instance.ProtectButtons();
         for (int d = 0; d < Dicelist.Length; d++)
         {
-            
-            if (KeepDiceButtons[d].m_keepDice) 
+            if (KeepDiceButtons[d].keepDice) 
             {
                 continue;
             }
@@ -66,7 +64,6 @@ public class DiceGameManager : MonoBehaviour
         rollCount += 1;
         StatsGUI.Instance.UpdateStatsGUI();
     }
-
     void CheckRollsLeft()
     {
         rollsLeft -= 1;
@@ -79,19 +76,32 @@ public class DiceGameManager : MonoBehaviour
             rollsLeft = rollsMax;
         }
     }
-    public List<int> DiceValuesList()
+    public void PassTurn()
     {
-        List<int> diceValues = new List<int>();
-
-        foreach (var dice in Dicelist)
+        if (isPlayerTurn)
         {
-            diceValues.Add(dice.dieValue);
-        }
 
-        return diceValues;
+        }
+        else
+        {
+            ai.AITurn();
+        }
+        isPlayerTurn = !isPlayerTurn;
     }
-    public int CountDiceWithValueList(List<int> diceValues, int value)
-    {
-        return diceValues.Count(v => v == value);
-    }
+
+    //public List<int> DiceValuesList()
+    //{
+    //    List<int> diceValues = new List<int>();
+
+    //    foreach (var dice in Dicelist)
+    //    {
+    //        diceValues.Add(dice.dieValue);
+    //    }
+
+    //    return diceValues;
+    //}
+    //public int CountDiceWithValueList(List<int> diceValues, int value)
+    //{
+    //    return diceValues.Count(v => v == value);
+    //}
 }
