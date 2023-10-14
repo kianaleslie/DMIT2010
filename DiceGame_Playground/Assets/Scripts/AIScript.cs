@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,44 +23,44 @@ public class AIScript : MonoBehaviour
         bool largeStraight = CheckLargeStraight();
 
         //keep pairs after performing the nessecary checks
-        if(twoPair || threeOfAKind || fourOfAKind || fullHouse)
+        if (twoPair || threeOfAKind || fourOfAKind || fullHouse)
         {
             KeepPairs();
         }
 
         //keep straights after performing the nessecary checks
-        if(smallStraight || largeStraight)
+        if (smallStraight || largeStraight)
         {
             KeepStraights();
         }
 
         //claim available combos 
-        if(twoPair)
+        if (twoPair)
         {
             ClaimTwoPair();
         }
         else
-            if(threeOfAKind)
+            if (threeOfAKind)
         {
             ClaimThreeOfAKind();
         }
         else
-            if(fourOfAKind)
+            if (fourOfAKind)
         {
             ClaimFourOfAKind();
         }
         else
-            if(fullHouse)
+            if (fullHouse)
         {
             ClaimFullHouse();
         }
         else
-            if(smallStraight)
+            if (smallStraight)
         {
             ClaimSmallStraight();
         }
-        else 
-            if(largeStraight)
+        else
+            if (largeStraight)
         {
             ClaimLargeStraight();
         }
@@ -67,37 +68,201 @@ public class AIScript : MonoBehaviour
         //end turn
         diceGameManager.PassTurn();
     }
-    
+
     //methods to check each combo
     private bool CheckTwoPair()
     {
-        return true;
+        //count each face on the dice
+        int[] faceCount = new int[diceList.Length];
+
+        foreach (Dice die in diceList)
+        {
+            //-1 for the array index 
+            int faceValue = die.dieValue - 1;
+            faceCount[faceValue]++;
+        }
+
+        //checking if there are two pairs in the array 
+        int pair = 0;
+        for (int index = 0; index < diceList.Length; index++)
+        {
+            if (faceCount[index] >= 2)
+            {
+                pair++;
+            }
+        }
+        return pair == 2;
     }
     private bool CheckThreeOfAKind()
     {
-        return true;
+        int[] faceCount = new int[diceList.Length];
+
+        foreach (Dice die in diceList)
+        {
+            int faceValue = die.dieValue - 1;
+            faceCount[faceValue]++;
+        }
+        for (int index = 0; index < diceList.Length; index++)
+        {
+            if (faceCount[index] >= 3)
+            {
+                return true;
+            }
+        }
+        return false;
     }
     private bool CheckFourOfAKind()
     {
-        return true;
+        int[] faceCount = new int[diceList.Length];
+
+        foreach (Dice die in diceList)
+        {
+            int faceValue = die.dieValue - 1;
+            faceCount[faceValue]++;
+        }
+        for (int index = 0; index < diceList.Length; index++)
+        {
+            if (faceCount[index] >= 4)
+            {
+                return true;
+            }
+        }
+        return false;
     }
     private bool CheckFullHouse()
     {
-        return true;
+        int[] faceCount = new int[diceList.Length];
+
+        foreach (Dice die in diceList)
+        {
+            int faceValue = die.dieValue - 1;
+            faceCount[faceValue]++;
+        }
+
+        bool threePair = false;
+        bool twoPair = false;
+        for (int index = 0; index < diceList.Length; index++)
+        {
+            if (faceCount[index] >= 3)
+            {
+                threePair = true;
+            }
+            if (faceCount[index] >= 2)
+            {
+                twoPair = true;
+            }
+        }
+        return threePair && twoPair;
     }
     private bool CheckSmallStraight()
     {
-        return true;
+        List<int> diceValue = new List<int>();
+
+        foreach (Dice die in diceList)
+        {
+            diceValue.Add(die.dieValue);
+        }
+
+        diceValue.Sort();
+        //diceValue.Count - 3 makes sure that there are at least 4 dice values to check
+        for (int index = 0; index < diceValue.Count - 3; index++)
+        {
+            //check if there is at least 4 numbers in order 
+            if (diceValue[index + 1] == diceValue[index] + 1 &&
+                diceValue[index + 2] == diceValue[index] + 2 &&
+                diceValue[index + 3] == diceValue[index] + 3)
+            {
+                return true;
+            }
+        }
+        return false;
     }
     private bool CheckLargeStraight()
     {
-        return true;
+        //List<int> diceValue = new List<int>();
+
+        //foreach (Dice die in diceList)
+        //{
+        //    diceValue.Add(die.dieValue);
+        //}
+
+        //for (int index = 0; index < diceList.Length; index++)
+        //{
+        //    diceValue[index] = diceList[index].dieValue;
+        //}
+
+        //diceValue.Sort();
+        //bool isLargeStraight = true;
+
+        ////check large straight 1-5
+        //for (int index = 0; index < 5; index++)
+        //{
+        //    if (diceValue[index] != index + 1)
+        //    {
+        //        isLargeStraight = false;
+        //        break;
+        //    }
+        //}
+        //if (isLargeStraight)
+        //{
+        //    return true;
+        //}
+
+        ////check 2-6
+        //isLargeStraight = true;
+        //for (int index = 0; index < 5; index++)
+        //{
+        //    if (diceValue[index] != index + 2)
+        //    {
+        //        isLargeStraight = false;
+        //        break;
+        //    }
+        //}
+        //return isLargeStraight;
+        List<int> diceValue = new List<int>();
+
+        foreach (Dice die in diceList)
+        {
+            diceValue.Add(die.dieValue);
+        }
+
+        diceValue.Sort();
+        for (int index = 0; index < diceValue.Count - 3; index++)
+        {
+            //check if there is at least 5 numbers in order 
+            if (diceValue[index + 1] == diceValue[index] + 1 &&
+                diceValue[index + 2] == diceValue[index] + 2 &&
+                diceValue[index + 3] == diceValue[index] + 3 &&
+                diceValue[index + 4] == diceValue[index] + 4)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     //methods to keep pairs and straights
     private void KeepPairs()
     {
+        int[] faceCount = new int[diceList.Length];
 
+        foreach (Dice die in diceList)
+        {
+            int faceValue = die.dieValue - 1;
+            faceCount[faceValue]++;
+        }
+        for (int index = 0; index < diceList.Length; index++)
+        {
+            if (faceCount[index] >= 2)
+            {
+                DiceButton diceButton = diceList[index].GetComponent<DiceButton>();
+
+                if (diceButton != null)
+                {
+                    diceButton.ToggleDice();
+                }
+            }
+        }
     }
     private void KeepStraights()
     {
