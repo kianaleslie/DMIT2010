@@ -10,7 +10,7 @@ public class ClaimButton : MonoBehaviour
 {
     [SerializeField/*,HideInInspector*/] TMP_Text buttonText;
     [SerializeField/*,HideInInspector*/] Button thisClaimButton;
-    public bool goalClaimed = false;
+    public bool comboClaimed = false;
 
     private void Awake()
     {
@@ -19,7 +19,7 @@ public class ClaimButton : MonoBehaviour
 
     public void Claim()
     {
-        goalClaimed = true;
+        comboClaimed = true;
         buttonText.text = "Claimed";
         thisClaimButton.interactable = false;
     }

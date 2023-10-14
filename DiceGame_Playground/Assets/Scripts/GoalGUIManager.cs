@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-//handles the UI elements related to the game's goals and combinations
+//handles the UI elements related to the combinations
 public class GoalGUIManager : MonoBehaviour
 {
 
@@ -37,7 +37,7 @@ public class GoalGUIManager : MonoBehaviour
     {
         foreach (ClaimButton button in goalButtons)
         {
-            if (!button.goalClaimed)
+            if (!button.comboClaimed)
             {
                 button.GetComponent<Button>().interactable = true;
             }
@@ -51,7 +51,7 @@ public class GoalGUIManager : MonoBehaviour
 
     public void TryClaimingThreeOfAKind()
     {
-        if (!goalButtons[0].goalClaimed)
+        if (!goalButtons[0].comboClaimed)
         {
             //call to DiceGameMangager to get current list of dice
             List<int> diceValues = diceList.DiceValuesList();
@@ -72,20 +72,20 @@ public class GoalGUIManager : MonoBehaviour
                 Debug.Log("Three of a Kind claimed!");
             }
 
-            //else
-            //{
-            //    Debug.Log("Invalid Three of a Kind!"); 
-            //}
+            else
+            {
+                Debug.Log("Invalid Three of a Kind!");
+            }
         }
-        //else
-        //{
-        //    Debug.Log("Three of a Kind already claimed!");
-        //}
+        else
+        {
+            Debug.Log("Three of a Kind already claimed!");
+        }
     }
 
     public void TryClaimingFourOfAKind()
     {
-        if (!goalButtons[1].goalClaimed)
+        if (!goalButtons[1].comboClaimed)
         {
             List<int> diceValues = diceList.DiceValuesList();
 
@@ -104,20 +104,20 @@ public class GoalGUIManager : MonoBehaviour
                 goalButtons[1].Claim();
                 Debug.Log("Four of a Kind claimed!");
             }
-            // else
-            // {
-            //     Debug.Log("Invalid Four of a Kind!");
-            // }
+            else
+            {
+                Debug.Log("Invalid Four of a Kind!");
+            }
         }
-        // else
-        // {
-        //     Debug.Log("Four of a Kind already claimed!");
-        // }
+        else
+        {
+            Debug.Log("Four of a Kind already claimed!");
+        }
     }
 
     public void TryClaimingSmallStraight()
     {
-        if (!goalButtons[2].goalClaimed)
+        if (!goalButtons[2].comboClaimed)
         {
             List<int> diceValues = diceList.DiceValuesList();
             bool validSmallStraight = CheckForSmallStraight(diceValues);
@@ -127,20 +127,20 @@ public class GoalGUIManager : MonoBehaviour
                 goalButtons[2].Claim();
                 Debug.Log("Small Straight claimed!");
             }
-            // else
-            // {
-            //     Debug.Log("Invalid Small Straight!");
-            // }
+            else
+            {
+                Debug.Log("Invalid Small Straight!");
+            }
         }
-        // else
-        // {
-        //     Debug.Log("Small Straight already claimed!");
-        // }
+        else
+        {
+            Debug.Log("Small Straight already claimed!");
+        }
     }
 
     public void TryClaimingLargeStraight()
     {
-        if (!goalButtons[3].goalClaimed)
+        if (!goalButtons[3].comboClaimed)
         {
             List<int> diceValues = diceList.DiceValuesList();
             bool validLargeStraight = CheckForLargeStraight(diceValues);
@@ -151,20 +151,20 @@ public class GoalGUIManager : MonoBehaviour
                 goalButtons[3].Claim();
                 Debug.Log("Large Straight claimed!");
             }
-            // else
-            // {
-            //     Debug.Log("Invalid Large Straight!");
-            // }
+            else
+            {
+                Debug.Log("Invalid Large Straight!");
+            }
         }
-        // else
-        // {
-        //     Debug.Log("Large Straight already claimed!");
-        // }
+        else
+        {
+            Debug.Log("Large Straight already claimed!");
+        }
     }
 
     public void TryClaimingTwoPairs()
     {
-        if (!goalButtons[4].goalClaimed)
+        if (!goalButtons[4].comboClaimed)
         {
            
             List<int> diceValues = diceList.DiceValuesList();
@@ -175,20 +175,20 @@ public class GoalGUIManager : MonoBehaviour
                 goalButtons[4].Claim();
                 Debug.Log("Two Pairs claimed!");
             }
-            // else
-            // {
-            //     Debug.Log("Invalid Two Pairs!");
-            // }
+            else
+            {
+                Debug.Log("Invalid Two Pairs!");
+            }
         }
-        // else
-        // {
-        //     Debug.Log("Two Pairs already claimed!");
-        // }
+        else
+        {
+            Debug.Log("Two Pairs already claimed!");
+        }
     }
 
     public void TryClaimingFullHouse()
     {
-        if (!goalButtons[5].goalClaimed)
+        if (!goalButtons[5].comboClaimed)
         {
             List<int> diceValues = diceList.DiceValuesList();
             bool validFullHouse = CheckForFullHouse(diceValues);
@@ -198,15 +198,15 @@ public class GoalGUIManager : MonoBehaviour
                 goalButtons[5].Claim();
                 Debug.Log("Full House claimed!");
             }
-            // else
-            // {
-            //     Debug.Log("Invalid Full House!");
-            // }
+            else
+            {
+                Debug.Log("Invalid Full House!");
+            }
         }
-        // else
-        // {
-        //     Debug.Log("Full House already claimed!");
-        // }
+        else
+        {
+            Debug.Log("Full House already claimed!");
+        }
     }
     #endregion
     public bool CheckForSmallStraight(List<int> diceValues)
