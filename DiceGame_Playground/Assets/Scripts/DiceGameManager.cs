@@ -34,17 +34,6 @@ public class DiceGameManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    private void Start()
-    {
-        if(ai != null)
-        {
-            StartAIPlay();
-        }
-    }
-    void StartAIPlay()
-    {
-        ai.AIPlay();
-    }
     public void Roll()
     {
         if (!isRolling)
