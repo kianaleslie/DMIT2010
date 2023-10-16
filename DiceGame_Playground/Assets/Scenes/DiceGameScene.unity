@@ -2490,7 +2490,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   diceGameManager: {fileID: 1063446262}
   goalGUIManager: {fileID: 1932742085}
-  diceList: []
+  diceList:
+  - {fileID: 1683131111}
+  - {fileID: 1594013188}
+  - {fileID: 1193990247}
+  - {fileID: 364161491}
+  - {fileID: 126052725}
 --- !u!4 &801410540
 Transform:
   m_ObjectHideFlags: 0

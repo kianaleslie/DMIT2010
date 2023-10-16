@@ -54,16 +54,6 @@ public class AIScript : MonoBehaviour
         {
             ClaimTwoPair();
             Debug.Log("claim 2p");
-            //ClaimButton twoPairButton = GetClaimButton(ComboType.TwoPair);
-            //if (twoPairButton != null)
-            //{
-            //    twoPairButton.Claim();
-            //    Debug.Log("claim 2p");
-            //}
-            //else
-            //{
-            //    // Handle the case where no TwoPair combo is available
-            //}
         }
         else
             if (threeOfAKind)
@@ -396,21 +386,21 @@ public class AIScript : MonoBehaviour
         }
         return null;
     }
-    //public ComboType PriortizeCombos(List<Combo> combos)
-    //{
-    //    int maxScore = 0;
-    //    ComboType priortizeCombo = ComboType.FullHouse;
+    public ComboType PriortizeCombos(List<Combo> combos)
+    {
+        int maxScore = 0;
+        ComboType priortizeCombo = ComboType.FullHouse;
 
-    //    foreach (var combo in combos)
-    //    {
-    //        if (combo.score > maxScore)
-    //        {
-    //            maxScore = combo.score;
-    //            priortizeCombo = combo.comboType;
-    //        }
-    //    }
-    //    return priortizeCombo;
-    //}
+        foreach (var combo in combos)
+        {
+            if (combo.score > maxScore)
+            {
+                maxScore = combo.score;
+                priortizeCombo = combo.comboType;
+            }
+        }
+        return priortizeCombo;
+    }
 }
 
 //Dice can be rolled for a random result.	

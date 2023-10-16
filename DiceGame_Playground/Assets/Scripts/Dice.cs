@@ -18,6 +18,7 @@ public class Dice : MonoBehaviour
     {
         int newValue = Random.Range(1, 6);
         gameObject.GetComponent<SpriteRenderer>().sprite = DiceSprites[newValue - 1];
+        dieValue = newValue;
         return newValue;
     }
 }
