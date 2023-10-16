@@ -14,7 +14,6 @@ public class DiceGameManager : MonoBehaviour
     public AIScript ai;
 
     public bool isRolling;
-    public bool isPlayerTurn;
 
     public int rollCount = 0;
     public int score = 0;
@@ -34,6 +33,17 @@ public class DiceGameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+    private void Start()
+    {
+        if(ai != null)
+        {
+            StartAIPlay();
+        }
+    }
+    void StartAIPlay()
+    {
+        ai.AIPlay();
     }
     public void Roll()
     {
@@ -75,33 +85,5 @@ public class DiceGameManager : MonoBehaviour
             }
             rollsLeft = rollsMax;
         }
-    }
-    public void PassTurn()
-    {
-        if (isPlayerTurn)
-        {
-
-        }
-        else
-        {
-            ai.AITurn();
-        }
-        isPlayerTurn = !isPlayerTurn;
-    }
-
-    public List<int> DiceValuesList()
-    {
-        List<int> diceValues = new List<int>();
-
-        foreach (var dice in Dicelist)
-        {
-            diceValues.Add(dice.dieValue);
-        }
-
-        return diceValues;
-    }
-    public int CountDiceWithValueList(List<int> diceValues, int value)
-    {
-        return diceValues.Count(v => v == value);
     }
 }
