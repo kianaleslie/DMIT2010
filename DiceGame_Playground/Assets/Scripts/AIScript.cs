@@ -9,12 +9,12 @@ public class AIScript : MonoBehaviour
     public GoalGUIManager goalGUIManager;
     public Dice[] diceList;
 
-    public class Combo
-    {
-        public ComboType comboType;
-        public bool isSelected;
-        public int score;
-    }
+    //public class Combo
+    //{
+    //    public ComboType comboType;
+    //    public bool isSelected;
+    //    public int score;
+    //}
     public enum ComboType
     {
         TwoPair,
@@ -356,9 +356,8 @@ public class AIScript : MonoBehaviour
         //    }
         //}
         //return null;
-        int index = -1; // Initialize with an invalid index.
+        int index = -1; 
 
-        // Determine the index based on the comboType.
         switch (comboType)
         {
             case ComboType.ThreeOfAKind:
@@ -383,7 +382,6 @@ public class AIScript : MonoBehaviour
 
         if (index != -1 && index < goalGUIManager.goalButtons.Length)
         {
-            // Ensure the index is within the bounds of the goalButtons list.
             return goalGUIManager.goalButtons[index];
         }
         return null;

@@ -3829,12 +3829,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e131b7946c177849a7b802eb05590b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Dicelist:
-  - {fileID: 1683131111}
-  - {fileID: 1594013188}
-  - {fileID: 1193990247}
-  - {fileID: 364161491}
-  - {fileID: 126052725}
+  Dicelist: []
   KeepDiceButtons:
   - {fileID: 517687836}
   - {fileID: 1231728306}
@@ -6569,7 +6564,8 @@ MonoBehaviour:
   - {fileID: 1083829926}
   - {fileID: 1768363806}
   - {fileID: 1915436158}
-  diceList: {fileID: 0}
+  diceList: {fileID: 1063446262}
+  ai: {fileID: 801410539}
 --- !u!1 &1953197224
 GameObject:
   m_ObjectHideFlags: 1
