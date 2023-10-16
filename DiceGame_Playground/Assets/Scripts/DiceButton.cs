@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 
 //controls the behaviour of a die
@@ -12,9 +13,11 @@ public class DiceButton : MonoBehaviour
     public bool keepDice = false;
 
     [SerializeField] TMP_Text buttonText;
+    [SerializeField] Button button;
     private void Awake()
     {
         buttonText = GetComponentInChildren<TMP_Text>();
+        button.interactable = false;
     }
 
     public void ToggleDice()

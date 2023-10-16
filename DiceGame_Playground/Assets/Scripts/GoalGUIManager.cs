@@ -35,14 +35,14 @@ public class GoalGUIManager : MonoBehaviour
     }
     public void ReleaseButtons()
     {
-        foreach (ClaimButton button in goalButtons)
-        {
-            if (!button.comboClaimed)
-            {
-                button.GetComponent<Button>().interactable = true;
-            }
+        //foreach (ClaimButton button in goalButtons)
+        //{
+        //    if (!button.comboClaimed)
+        //    {
+        //        button.GetComponent<Button>().interactable = true;
+        //    }
 
-        }
+        //}
     }
     
     #region -- CLAIMING COMBOS

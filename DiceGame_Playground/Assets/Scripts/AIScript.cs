@@ -9,14 +9,8 @@ public class AIScript : MonoBehaviour
     public GoalGUIManager goalGUIManager;
     public Dice[] diceList;
 
-    //public bool[] combosClaimed = new bool[6];
+    [SerializeField] public ClaimButton[] combosClaimed;
 
-    //public class Combo
-    //{
-    //    public ComboType comboType;
-    //    public bool isSelected;
-    //    public int score;
-    //}
     public enum ComboType
     {
         TwoPair,
@@ -37,38 +31,39 @@ public class AIScript : MonoBehaviour
         bool smallStraight = CheckSmallStraight();
         bool largeStraight = CheckLargeStraight();
 
+
         //claim available combos 
-        if (twoPair /*&& !combosClaimed[(int)ComboType.TwoPair]*/)
+        if (twoPair && !combosClaimed[(int)ComboType.TwoPair].comboClaimed)
         {
             ClaimTwoPair();
             Debug.Log("claim two pairs");
         }
         else
-            if (threeOfAKind /*&& !combosClaimed[(int)ComboType.ThreeOfAKind]*/) 
+            if (threeOfAKind && !combosClaimed[(int)ComboType.ThreeOfAKind].comboClaimed)
         {
             ClaimThreeOfAKind();
             Debug.Log("claim 3 of a kind");
         }
         else
-            if (fourOfAKind /*&& !combosClaimed[(int)ComboType.FourOfAKind]*/)
+            if (fourOfAKind && !combosClaimed[(int)ComboType.FourOfAKind].comboClaimed)
         {
             ClaimFourOfAKind();
             Debug.Log("claim 4 of a kind");
         }
         else
-            if (fullHouse /*&& !combosClaimed[(int)ComboType.FullHouse]*/)
+            if (fullHouse && !combosClaimed[(int)ComboType.FullHouse].comboClaimed)
         {
             ClaimFullHouse();
             Debug.Log("claim full house");
         }
         else
-            if (smallStraight /*&& !combosClaimed[(int)ComboType.SmallStraight]*/)
+            if (smallStraight && !combosClaimed[(int)ComboType.SmallStraight].comboClaimed)
         {
             ClaimSmallStraight();
             Debug.Log("claim small straight");
         }
         else
-            if (largeStraight/* && !combosClaimed[(int)ComboType.LargeStraight]*/)
+            if (largeStraight && !combosClaimed[(int)ComboType.LargeStraight].comboClaimed)
         {
             ClaimLargeStraight();
             Debug.Log("claim large straight");
@@ -78,14 +73,12 @@ public class AIScript : MonoBehaviour
         if (twoPair || threeOfAKind || fourOfAKind || fullHouse)
         {
             KeepPairs();
-            Debug.Log("keep pairs");
         }
 
         //keep straights after performing the nessecary checks
         if (smallStraight || largeStraight)
         {
             KeepRuns();
-            Debug.Log("keep runs");
         }
     }
 
@@ -239,20 +232,17 @@ public class AIScript : MonoBehaviour
         {
             if (faceCount[index] >= 2)
             {
-                DiceButton diceButton = null;
-
                 foreach (Dice die in diceList)
                 {
                     if (die.dieValue - 1 == index)
                     {
-                        diceButton = die.GetComponent<DiceButton>();
-                        break;
+                        Debug.Log("keep pairs");
+                        DiceButton diceButton = die.GetComponent<DiceButton>();
+                        if (diceButton != null)
+                        {
+                            diceButton.ToggleDice();
+                        }
                     }
-                }
-
-                if (diceButton != null)
-                {
-                    diceButton.ToggleDice();
                 }
             }
         }
@@ -277,6 +267,7 @@ public class AIScript : MonoBehaviour
                 {
                     foreach (Dice die in diceList)
                     {
+                        Debug.Log("keep small run");
                         DiceButton diceButton = die.GetComponent<DiceButton>();
                         if (diceButton != null)
                         {
@@ -288,11 +279,13 @@ public class AIScript : MonoBehaviour
                 {
                     foreach (Dice die in diceList)
                     {
+                        Debug.Log("keep large run");
                         DiceButton diceButton = die.GetComponent<DiceButton>();
                         if (diceButton != null)
                         {
-                            diceButton.ToggleDice();
+                            diceButton.keepDice = true;
                         }
+
                     }
                 }
             }
@@ -354,15 +347,7 @@ public class AIScript : MonoBehaviour
     }
     public ClaimButton GetClaimButton(ComboType comboType)
     {
-        //foreach (ClaimButton claimButton in goalGUIManager.goalButtons)
-        //{
-        //    if (claimButton.comboType == comboType && !claimButton.comboClaimed)
-        //    {
-        //        return claimButton;
-        //    }
-        //}
-        //return null;
-        int index = -1; 
+        int index = -1;
 
         switch (comboType)
         {
@@ -392,11 +377,6 @@ public class AIScript : MonoBehaviour
         }
         return null;
     }
-    //public ComboType PriortizeCombos(List<Combo> combos)
-    //{
-        //give a score to each combo 
-    //    
-    //}
 }
 
 //Dice can be rolled for a random result.	

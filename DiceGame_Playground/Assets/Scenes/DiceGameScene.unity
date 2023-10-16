@@ -1749,6 +1749,7 @@ MonoBehaviour:
   parentDice: {fileID: 1683131111}
   keepDice: 0
   buttonText: {fileID: 0}
+  button: {fileID: 517687833}
 --- !u!1 &520159909
 GameObject:
   m_ObjectHideFlags: 0
@@ -1979,7 +1980,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &585600806
 RectTransform:
   m_ObjectHideFlags: 2
@@ -3279,7 +3280,13 @@ MonoBehaviour:
   - {fileID: 1193990247}
   - {fileID: 364161491}
   - {fileID: 126052725}
-  combosClaimed: 000000000000
+  combosClaimed:
+  - {fileID: 1768363806}
+  - {fileID: 980515956}
+  - {fileID: 981190175}
+  - {fileID: 1915436158}
+  - {fileID: 1455597106}
+  - {fileID: 1083829926}
 --- !u!4 &801410540
 Transform:
   m_ObjectHideFlags: 0
@@ -4387,7 +4394,6 @@ MonoBehaviour:
   buttonText: {fileID: 1837093294}
   thisClaimButton: {fileID: 0}
   comboClaimed: 0
-  comboType: 0
 --- !u!1 &981190170
 GameObject:
   m_ObjectHideFlags: 0
@@ -4538,7 +4544,6 @@ MonoBehaviour:
   buttonText: {fileID: 430606550}
   thisClaimButton: {fileID: 0}
   comboClaimed: 0
-  comboType: 0
 --- !u!1 &987027032
 GameObject:
   m_ObjectHideFlags: 1
@@ -5373,7 +5378,6 @@ MonoBehaviour:
   buttonText: {fileID: 1811603285}
   thisClaimButton: {fileID: 0}
   comboClaimed: 0
-  comboType: 0
 --- !u!1 &1097794642
 GameObject:
   m_ObjectHideFlags: 0
@@ -5758,6 +5762,7 @@ MonoBehaviour:
   parentDice: {fileID: 1594013188}
   keepDice: 0
   buttonText: {fileID: 0}
+  button: {fileID: 1231728303}
 --- !u!1 &1296324470
 GameObject:
   m_ObjectHideFlags: 0
@@ -5908,6 +5913,7 @@ MonoBehaviour:
   parentDice: {fileID: 126052725}
   keepDice: 0
   buttonText: {fileID: 0}
+  button: {fileID: 1296324472}
 --- !u!1 &1411603652
 GameObject:
   m_ObjectHideFlags: 0
@@ -6136,7 +6142,6 @@ MonoBehaviour:
   buttonText: {fileID: 1495381840}
   thisClaimButton: {fileID: 0}
   comboClaimed: 0
-  comboType: 0
 --- !u!1 &1473943618
 GameObject:
   m_ObjectHideFlags: 1
@@ -7020,6 +7025,7 @@ MonoBehaviour:
   parentDice: {fileID: 364161491}
   keepDice: 0
   buttonText: {fileID: 0}
+  button: {fileID: 1727267428}
 --- !u!1 &1768363801
 GameObject:
   m_ObjectHideFlags: 0
@@ -7170,7 +7176,6 @@ MonoBehaviour:
   buttonText: {fileID: 776471820}
   thisClaimButton: {fileID: 0}
   comboClaimed: 0
-  comboType: 0
 --- !u!1 &1782190514
 GameObject:
   m_ObjectHideFlags: 0
@@ -7815,7 +7820,6 @@ MonoBehaviour:
   buttonText: {fileID: 874112236}
   thisClaimButton: {fileID: 0}
   comboClaimed: 0
-  comboType: 0
 --- !u!1 &1932742080
 GameObject:
   m_ObjectHideFlags: 0
@@ -8538,3 +8542,4 @@ MonoBehaviour:
   parentDice: {fileID: 1193990247}
   keepDice: 0
   buttonText: {fileID: 0}
+  button: {fileID: 2055635137}
