@@ -7,7 +7,7 @@ using UnityEngine;
 //handles UI elements that display stats and scores
 public class StatsGUI : MonoBehaviour
 {
-    [SerializeField] TMP_Text scoreText;
+    //[SerializeField] TMP_Text scoreText;
     [SerializeField] TMP_Text rollTotalText;
     [SerializeField] TMP_Text rollsLeftText;
 
@@ -29,7 +29,7 @@ public class StatsGUI : MonoBehaviour
     {
         rollTotalText.text = $"Total rolls: {DiceGameManager.Instance.rollCount}";
         rollsLeftText.text = $"Rolls left: {DiceGameManager.Instance.rollsLeft}";
-        scoreText.text = $"Score: {DiceGameManager.Instance.score}";
+        //scoreText.text = $"Score: {DiceGameManager.Instance.score}";
     }
     private void Start()
     {

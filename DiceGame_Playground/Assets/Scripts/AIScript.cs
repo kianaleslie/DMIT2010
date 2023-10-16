@@ -9,12 +9,14 @@ public class AIScript : MonoBehaviour
     public GoalGUIManager goalGUIManager;
     public Dice[] diceList;
 
-    public class Combo
-    {
-        public ComboType comboType;
-        public bool isSelected;
-        public int score;
-    }
+    //public bool[] combosClaimed = new bool[6];
+
+    //public class Combo
+    //{
+    //    public ComboType comboType;
+    //    public bool isSelected;
+    //    public int score;
+    //}
     public enum ComboType
     {
         TwoPair,
@@ -35,6 +37,43 @@ public class AIScript : MonoBehaviour
         bool smallStraight = CheckSmallStraight();
         bool largeStraight = CheckLargeStraight();
 
+        //claim available combos 
+        if (twoPair /*&& !combosClaimed[(int)ComboType.TwoPair]*/)
+        {
+            ClaimTwoPair();
+            Debug.Log("claim two pairs");
+        }
+        else
+            if (threeOfAKind /*&& !combosClaimed[(int)ComboType.ThreeOfAKind]*/) 
+        {
+            ClaimThreeOfAKind();
+            Debug.Log("claim 3 of a kind");
+        }
+        else
+            if (fourOfAKind /*&& !combosClaimed[(int)ComboType.FourOfAKind]*/)
+        {
+            ClaimFourOfAKind();
+            Debug.Log("claim 4 of a kind");
+        }
+        else
+            if (fullHouse /*&& !combosClaimed[(int)ComboType.FullHouse]*/)
+        {
+            ClaimFullHouse();
+            Debug.Log("claim full house");
+        }
+        else
+            if (smallStraight /*&& !combosClaimed[(int)ComboType.SmallStraight]*/)
+        {
+            ClaimSmallStraight();
+            Debug.Log("claim small straight");
+        }
+        else
+            if (largeStraight/* && !combosClaimed[(int)ComboType.LargeStraight]*/)
+        {
+            ClaimLargeStraight();
+            Debug.Log("claim large straight");
+        }
+
         //keep pairs after performing the nessecary checks
         if (twoPair || threeOfAKind || fourOfAKind || fullHouse)
         {
@@ -47,43 +86,6 @@ public class AIScript : MonoBehaviour
         {
             KeepRuns();
             Debug.Log("keep runs");
-        }
-
-        //claim available combos 
-        if (twoPair)
-        {
-            ClaimTwoPair();
-            Debug.Log("claim 2p");
-        }
-        else
-            if (threeOfAKind)
-        {
-            ClaimThreeOfAKind();
-            Debug.Log("claim 3k");
-        }
-        else
-            if (fourOfAKind)
-        {
-            ClaimFourOfAKind();
-            Debug.Log("claim 4k");
-        }
-        else
-            if (fullHouse)
-        {
-            ClaimFullHouse();
-            Debug.Log("claim fh");
-        }
-        else
-            if (smallStraight)
-        {
-            ClaimSmallStraight();
-            Debug.Log("claim ss");
-        }
-        else
-            if (largeStraight)
-        {
-            ClaimLargeStraight();
-            Debug.Log("claim ls");
         }
     }
 
@@ -205,15 +207,19 @@ public class AIScript : MonoBehaviour
         }
 
         diceValue.Sort();
-        for (int index = 0; index < diceValue.Count - 3; index++)
+
+        if (diceValue.Count >= 5)
         {
-            //check if there is at least 5 numbers in order 
-            if (diceValue[index + 1] == diceValue[index] + 1 &&
-                diceValue[index + 2] == diceValue[index] + 2 &&
-                diceValue[index + 3] == diceValue[index] + 3 &&
-                diceValue[index + 4] == diceValue[index] + 4)
+            for (int index = 0; index < diceValue.Count - 4; index++)
             {
-                return true;
+                //check if there is at least 5 numbers in order 
+                if (diceValue[index + 1] == diceValue[index] + 1 &&
+                    diceValue[index + 2] == diceValue[index] + 2 &&
+                    diceValue[index + 3] == diceValue[index] + 3 &&
+                    diceValue[index + 4] == diceValue[index] + 4)
+                {
+                    return true;
+                }
             }
         }
         return false;
@@ -301,7 +307,7 @@ public class AIScript : MonoBehaviour
     public void ClaimTwoPair()
     {
         ClaimButton claimButton = GetClaimButton(ComboType.TwoPair);
-        if (claimButton != null)
+        if (claimButton != null /*&& !combosClaimed[(int)ComboType.TwoPair]*/)
         {
             claimButton.Claim();
         }
@@ -309,7 +315,7 @@ public class AIScript : MonoBehaviour
     public void ClaimThreeOfAKind()
     {
         ClaimButton claimButton = GetClaimButton(ComboType.ThreeOfAKind);
-        if (claimButton != null)
+        if (claimButton != null /*&& !combosClaimed[(int)ComboType.ThreeOfAKind]*/)
         {
             claimButton.Claim();
         }
@@ -317,7 +323,7 @@ public class AIScript : MonoBehaviour
     public void ClaimFourOfAKind()
     {
         ClaimButton claimButton = GetClaimButton(ComboType.FourOfAKind);
-        if (claimButton != null)
+        if (claimButton != null /*&& !combosClaimed[(int)ComboType.FourOfAKind]*/)
         {
             claimButton.Claim();
         }
@@ -325,7 +331,7 @@ public class AIScript : MonoBehaviour
     public void ClaimFullHouse()
     {
         ClaimButton claimButton = GetClaimButton(ComboType.FullHouse);
-        if (claimButton != null)
+        if (claimButton != null /*&& !combosClaimed[(int)ComboType.FullHouse]*/)
         {
             claimButton.Claim();
         }
@@ -333,7 +339,7 @@ public class AIScript : MonoBehaviour
     public void ClaimSmallStraight()
     {
         ClaimButton claimButton = GetClaimButton(ComboType.SmallStraight);
-        if (claimButton != null)
+        if (claimButton != null /*&& !combosClaimed[(int)ComboType.SmallStraight]*/)
         {
             claimButton.Claim();
         }
@@ -341,7 +347,7 @@ public class AIScript : MonoBehaviour
     public void ClaimLargeStraight()
     {
         ClaimButton claimButton = GetClaimButton(ComboType.LargeStraight);
-        if (claimButton != null)
+        if (claimButton != null /*&& !combosClaimed[(int)ComboType.LargeStraight]*/)
         {
             claimButton.Claim();
         }
@@ -386,21 +392,11 @@ public class AIScript : MonoBehaviour
         }
         return null;
     }
-    public ComboType PriortizeCombos(List<Combo> combos)
-    {
-        int maxScore = 0;
-        ComboType priortizeCombo = ComboType.FullHouse;
-
-        foreach (var combo in combos)
-        {
-            if (combo.score > maxScore)
-            {
-                maxScore = combo.score;
-                priortizeCombo = combo.comboType;
-            }
-        }
-        return priortizeCombo;
-    }
+    //public ComboType PriortizeCombos(List<Combo> combos)
+    //{
+        //give a score to each combo 
+    //    
+    //}
 }
 
 //Dice can be rolled for a random result.	
