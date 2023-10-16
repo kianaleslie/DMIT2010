@@ -9,12 +9,12 @@ public class AIScript : MonoBehaviour
     public GoalGUIManager goalGUIManager;
     public Dice[] diceList;
 
-    //public class Combo
-    //{
-    //    public ComboType comboType;
-    //    public bool isSelected;
-    //    public int score;
-    //}
+    public class Combo
+    {
+        public ComboType comboType;
+        public bool isSelected;
+        public int score;
+    }
     public enum ComboType
     {
         TwoPair,
@@ -54,6 +54,16 @@ public class AIScript : MonoBehaviour
         {
             ClaimTwoPair();
             Debug.Log("claim 2p");
+            //ClaimButton twoPairButton = GetClaimButton(ComboType.TwoPair);
+            //if (twoPairButton != null)
+            //{
+            //    twoPairButton.Claim();
+            //    Debug.Log("claim 2p");
+            //}
+            //else
+            //{
+            //    // Handle the case where no TwoPair combo is available
+            //}
         }
         else
             if (threeOfAKind)

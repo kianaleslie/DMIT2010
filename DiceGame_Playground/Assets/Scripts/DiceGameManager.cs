@@ -58,6 +58,7 @@ public class DiceGameManager : MonoBehaviour
             }
             yield return new WaitForSeconds(0.125f);
         }
+        ai.AIPlay();
         isRolling = false;
         GoalGUIManager.Instance.ReleaseButtons();
         rollCount += 1;
