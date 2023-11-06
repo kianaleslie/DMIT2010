@@ -33,7 +33,7 @@ public class Hunter : MonoBehaviour
     {
         if (other.CompareTag("Runner"))
         {
-            if (HasLineOfSight(other.transform))
+            if (LineOfSight(other.transform))
             {
                 Vector3 chaseDirection = other.transform.position - transform.position;
                 chaseDirection.y = 0;
@@ -45,7 +45,7 @@ public class Hunter : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("SpeedBoost"))
         {
-            if (HasLineOfSight(collision.gameObject.transform))
+            if (LineOfSight(collision.gameObject.transform))
             {
                 Vector3 direction = collision.gameObject.transform.position - transform.position;
                 direction.y = 0;
@@ -129,7 +129,7 @@ public class Hunter : MonoBehaviour
         yield return new WaitForSeconds(timeToHaveBoost);
         movementSpeed -= 5.0f;
     }
-    bool HasLineOfSight(Transform target)
+    bool LineOfSight(Transform target)
     {
         RaycastHit hit;
         Vector3 direction = target.position - transform.position;
@@ -143,7 +143,7 @@ public class Hunter : MonoBehaviour
         }
         return false;
     }
-    //bool HasLineOfSightToSpeedBoost(Transform target)
+    //bool LineOfSightToSpeedBoost(Transform target)
     //{
     //    RaycastHit hit;
     //    Vector3 direction = target.position - transform.position;

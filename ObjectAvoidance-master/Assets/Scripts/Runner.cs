@@ -35,7 +35,7 @@ public class Runner : MonoBehaviour
     {
         if (other.CompareTag("Hunter"))
         {
-            if (HasLineOfSight(other.transform))
+            if (LineOfSight(other.transform))
             {
                 //runner detected a hunter in line of sight, move away from it
                 Vector3 runDirection = transform.position - other.transform.position;
@@ -48,7 +48,7 @@ public class Runner : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("SpeedBoost"))
         {
-            if (HasLineOfSightToSpeedBoost(collision.gameObject.transform))
+            if (SpeedBoostLineOfSight(collision.gameObject.transform))
             {
                 Vector3 direction = collision.gameObject.transform.position - transform.position;
                 direction.y = 0;
@@ -61,7 +61,7 @@ public class Runner : MonoBehaviour
         //else
         //     if (collision.gameObject.CompareTag("Disguise") && !isDisguised)
         //{
-        //    if (HasLineOfSight(collision.gameObject.transform))
+        //    if (LineOfSight(collision.gameObject.transform))
         //    {
         //        //move towards the disguise object
         //        Vector3 direction = collision.gameObject.transform.position - transform.position;
@@ -160,7 +160,7 @@ public class Runner : MonoBehaviour
         yield return new WaitForSeconds(timeToHaveBoost);
         movementSpeed -= 5.0f;
     }
-    bool HasLineOfSight(Transform target)
+    bool LineOfSight(Transform target)
     {
         RaycastHit hit;
         Vector3 direction = target.position - transform.position;
@@ -174,7 +174,7 @@ public class Runner : MonoBehaviour
         }
         return false;
     }
-    bool HasLineOfSightToSpeedBoost(Transform target)
+    bool SpeedBoostLineOfSight(Transform target)
     {
         RaycastHit hit;
         Vector3 direction = target.position - transform.position;
