@@ -6,8 +6,8 @@ public class Hunter : MonoBehaviour
 {
     [SerializeField] GameObject target;
     [SerializeField] float movementSpeed = 3.0f;
-    [SerializeField] float forwardDist = 1.0f;
-    [SerializeField] float sideDist = 3.0f;
+    [SerializeField] float forwardDistance = 1.0f;
+    [SerializeField] float sideDistance = 3.0f;
 
     RaycastHit hit;
     bool isLeft;
@@ -39,7 +39,7 @@ public class Hunter : MonoBehaviour
     //}
     void AvoidWalls()
     {
-        if (Physics.BoxCast(transform.position, new Vector3(0.5f, 0.5f, 0.5f), transform.forward, out hit, Quaternion.identity, forwardDist))
+        if (Physics.BoxCast(transform.position, new Vector3(0.5f, 0.5f, 0.5f), transform.forward, out hit, Quaternion.identity, forwardDistance))
         {
             if (hit.transform.gameObject.tag == "Wall")
             {
@@ -47,8 +47,8 @@ public class Hunter : MonoBehaviour
                 transform.rotation = Quaternion.LookRotation(Vector3.RotateTowards(transform.forward, -hit.normal, 1, 1));
 
                 // Rotate based on what is to the sides
-                isLeft = Physics.Raycast(transform.position, -transform.right, sideDist);
-                isRight = Physics.Raycast(transform.position, transform.right, sideDist);
+                isLeft = Physics.Raycast(transform.position, -transform.right, sideDistance);
+                isRight = Physics.Raycast(transform.position, transform.right, sideDistance);
 
                 if (isLeft && isRight)
                 {
