@@ -14,6 +14,7 @@ public class Hunter : MonoBehaviour
     bool isLeft;
     bool isRight;
     Keyboard kb;
+
     void Start()
     {
         kb = Keyboard.current;
@@ -44,7 +45,7 @@ public class Hunter : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("SpeedBoost"))
         {
-            if (HasLineOfSightToSpeedBoost(collision.gameObject.transform))
+            if (HasLineOfSight(collision.gameObject.transform))
             {
                 Vector3 direction = collision.gameObject.transform.position - transform.position;
                 direction.y = 0;
@@ -61,7 +62,6 @@ public class Hunter : MonoBehaviour
         {
             if (hit.transform.gameObject.tag == "Wall")
             {
-
                 transform.rotation = Quaternion.LookRotation(Vector3.RotateTowards(transform.forward, -hit.normal, 1, 1));
 
                 //rotate based on what is to the sides
@@ -143,18 +143,18 @@ public class Hunter : MonoBehaviour
         }
         return false;
     }
-    bool HasLineOfSightToSpeedBoost(Transform target)
-    {
-        RaycastHit hit;
-        Vector3 direction = target.position - transform.position;
+    //bool HasLineOfSightToSpeedBoost(Transform target)
+    //{
+    //    RaycastHit hit;
+    //    Vector3 direction = target.position - transform.position;
 
-        if (Physics.Raycast(transform.position, direction, out hit, detectionRadius))
-        {
-            if (hit.transform.CompareTag("SpeedBoost"))
-            {
-                return true;
-            }
-        }
-        return false;
-    }
+    //    if (Physics.Raycast(transform.position, direction, out hit, detectionRadius))
+    //    {
+    //        if (hit.transform.CompareTag("SpeedBoost"))
+    //        {
+    //            return true;
+    //        }
+    //    }
+    //    return false;
+    //}
 }

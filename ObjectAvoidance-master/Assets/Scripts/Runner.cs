@@ -9,9 +9,9 @@ public class Runner : MonoBehaviour
     [SerializeField] float sideDistance = 3.0f;
     [SerializeField] float detectionRadius = 5.0f;
     [SerializeField] GameObject target;
-    //[SerializeField] GameObject runnerPrefab;
-    //[SerializeField] GameObject disguisePrefab;
-    //[SerializeField] Vector3 scaleRunnerPrefab = new Vector3(0.1f, 0.1f, 0.1f);
+    [SerializeField] GameObject runnerPrefab;
+    [SerializeField] GameObject disguisePrefab;
+    //[SerializeField] Vector3 scaleRunnerPrefab = new Vector3(0.01f, 0.01f, 0.01f);
     //[SerializeField] Vector3 runnerScaleBack = new Vector3(1.0f, 1.0f, 1.0f);
     //[SerializeField] Transform runnerT;
 
@@ -68,23 +68,23 @@ public class Runner : MonoBehaviour
         //        direction.y = 0;
         //        transform.rotation = Quaternion.LookRotation(direction.normalized);
         //    }
-        //    //if (disguisePrefab != null)
-        //    //{
+        //    if (disguisePrefab != null)
+        //    {
         //        //get position of the target (runner)
         //        Vector3 targetPosition = runnerPrefab.transform.position;
 
-        //        //instantiate at target position
-        //        runnerT.localScale = scaleRunnerPrefab;
-        //        Instantiate(disguisePrefab, targetPosition, Quaternion.identity);
-        //        isDisguised = true;
-        //        collision.gameObject.SetActive(false);
-        //        StartCoroutine(RevertDisguise(5.0f));
-        //    //}
-        //    //runnerPrefab.SetActive(false);
-        //    //disguisePrefab.SetActive(true);
-        //    //isDisguised = true;
-        //    //collision.gameObject.SetActive(false);
-        //    //StartCoroutine(RevertDisguise(5.0f));
+        //instantiate at target position
+        //runnerT.localScale = scaleRunnerPrefab;
+        //Instantiate(disguisePrefab, targetPosition, Quaternion.identity);
+        //isDisguised = true;
+        //collision.gameObject.SetActive(false);
+        //StartCoroutine(RevertDisguise(5.0f));
+        //}
+        //runnerPrefab.SetActive(false);
+        //disguisePrefab.SetActive(true);
+        //isDisguised = true;
+        //collision.gameObject.SetActive(false);
+        //StartCoroutine(RevertDisguise(5.0f));
         //}
     }
     void AvoidWalls()
