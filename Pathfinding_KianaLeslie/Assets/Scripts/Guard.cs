@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Guard : MonoBehaviour
@@ -8,23 +10,39 @@ public class Guard : MonoBehaviour
     [SerializeField] GameObject nextNode;
     [SerializeField] GameObject startNode;
     [SerializeField] GameObject destinationNode;
+    [SerializeField] GameObject destinationNode2;
+    [SerializeField] GameObject destinationNode3;
     [SerializeField] GameObject previousNode;
 
     [SerializeField] float movementSpeed;
+    [SerializeField] TMP_Text uiText;
 
+    enum GuardState
+    {
+        Patrollling,
+        Delaying,
+        Capturing,
+    }
+    GuardState currentState = GuardState.Patrollling;
     void Start()
     {
         currentNode = startNode;
         nextNode = currentNode;
 
         transform.position = currentNode.transform.position;
+        currentState = GuardState.Patrollling;
     }
     void Update()
     {
         if (currentNode == destinationNode)
         {
-            destinationNode = startNode;
-            startNode = currentNode;
+            destinationNode = destinationNode2;
+            destinationNode2 = currentNode;
+        }
+        if (currentNode == destinationNode2)
+        {
+            destinationNode2 = destinationNode3;
+            destinationNode3 = currentNode;
         }
         else
         {
@@ -45,14 +63,30 @@ public class Guard : MonoBehaviour
                         targetNode = pathnode.connections[i];
                     }
                 }
-
                 nextNode = targetNode;
-                //nextNode = currentNode.GetComponent<Pathnode>().connections[Random.Range(0, currentNode.GetComponent<Pathnode>().connections.Count)];
-
             }
             else
             {
                 transform.Translate((nextNode.transform.position - transform.position).normalized * movementSpeed * Time.deltaTime);
+            }
+        }
+        UpdateUIText();
+    }
+    void UpdateUIText()
+    {
+        if (uiText != null)
+        {
+            switch (currentState)
+            {
+                case GuardState.Patrollling:
+                    uiText.text = "Guard: Patrolling";
+                    break;
+                case GuardState.Delaying:
+                    uiText.text = "Guard: Delaying";
+                    break;
+                case GuardState.Capturing:
+                    uiText.text = "Guard: Capturing";
+                    break;
             }
         }
     }
