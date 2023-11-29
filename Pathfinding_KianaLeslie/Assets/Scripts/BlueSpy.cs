@@ -18,6 +18,9 @@ public class BlueSpy : MonoBehaviour
     [SerializeField] TMP_Text uiText;
     [SerializeField] Collider detectionCollider;
     [SerializeField] Renderer spyRenderer;
+    float currentMovementSpeed;
+    float captureProbability = 0.6f;
+    bool isCaptured = false;
 
     enum SpyState
     {
@@ -30,6 +33,7 @@ public class BlueSpy : MonoBehaviour
 
     void Start()
     {
+        currentMovementSpeed = movementSpeed;
         currentNode = startNode;
         nextNode = currentNode;
 
@@ -38,6 +42,11 @@ public class BlueSpy : MonoBehaviour
     }
     void Update()
     {
+        if (isCaptured)
+        {
+            currentMovementSpeed = 0.0f;
+            return;
+        }
         if (currentNode == destinationNode)
         {
             destinationNode = destinationNode2;
@@ -79,7 +88,15 @@ public class BlueSpy : MonoBehaviour
     {
         if (other.CompareTag("Guard"))
         {
-            MakeSpyInvisible();
+            if (currentState != SpyState.Captured)
+            {
+                Capture();
+            }
+            if (currentState == SpyState.Disguise)
+            {
+                MakeSpyInvisible();
+            }
+                
         }
         if (other.CompareTag("Document"))
         {
@@ -140,6 +157,32 @@ public class BlueSpy : MonoBehaviour
         yield return new WaitForSeconds(5.0f);
         UpdateUIAfterInvisble();
     }
+    void Capture()
+    {
+        bool isCaptured = Random.Range(0f, 1f) < captureProbability;
+
+        if (isCaptured)
+        {
+            currentState = SpyState.Captured;
+            UpdateUIText();
+
+            StartCoroutine(DelayAfterCapture(10.0f));
+        }
+        else
+        {
+            MakeSpyInvisible();
+            StartCoroutine(WaitAfterInvisble());
+        }
+    }
+    IEnumerator DelayAfterCapture(float delayTime)
+    {
+        currentMovementSpeed = 0.0f;
+        yield return new WaitForSeconds(delayTime);
+        isCaptured = false;
+        currentMovementSpeed = movementSpeed;
+        currentState = SpyState.Spying;
+        UpdateUIText();
+    }
     void UpdateUIText()
     {
         if (uiText != null)
@@ -147,16 +190,16 @@ public class BlueSpy : MonoBehaviour
             switch (currentState)
             {
                 case SpyState.Spying:
-                    uiText.text = "Red Spy: Spying";
+                    uiText.text = "Blue Spy: Spying";
                     break;
                 case SpyState.Disguise:
-                    uiText.text = "Red Spy: Evading with Invisibility";
+                    uiText.text = "Blue Spy: Evading with Invisibility";
                     break;
                 case SpyState.Captured:
-                    uiText.text = "Red Spy: Captured";
+                    uiText.text = "Blue Spy: Captured";
                     break;
                 case SpyState.HoldDocument:
-                    uiText.text = "Red Spy: Holding Document";
+                    uiText.text = "Blue Spy: Holding Document";
                     break;
             }
         }

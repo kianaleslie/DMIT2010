@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Guard : MonoBehaviour
 {
@@ -17,13 +18,13 @@ public class Guard : MonoBehaviour
     [SerializeField] float movementSpeed;
     [SerializeField] TMP_Text uiText;
 
-    enum GuardState
+    public enum GuardState
     {
         Patrollling,
         Delaying,
         Capturing,
     }
-    GuardState currentState = GuardState.Patrollling;
+    public GuardState currentState = GuardState.Patrollling;
     void Start()
     {
         currentNode = startNode;
@@ -72,7 +73,26 @@ public class Guard : MonoBehaviour
         }
         UpdateUIText();
     }
-    void UpdateUIText()
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Spy"))
+        {
+            currentState = GuardState.Capturing;
+            UpdateUIText();
+            StartCoroutine(Wait());
+        }
+    }
+    void UpdateUIAfterEvent()
+    {
+        currentState = GuardState.Patrollling;
+        UpdateUIText();
+    }
+    IEnumerator Wait()
+    {
+        yield return new WaitForSeconds(2.0f);
+        UpdateUIAfterEvent();
+    }
+    public void UpdateUIText()
     {
         if (uiText != null)
         {
