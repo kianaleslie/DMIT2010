@@ -16,8 +16,6 @@ public class RedSpy : MonoBehaviour
 
     [SerializeField] float baseMovementSpeed;
     float currentMovementSpeed;
-    int speedBoostCount = 0;
-    int maxSpeedBoosts = 3;
     [SerializeField] TMP_Text uiText;
 
     enum SpyState
@@ -83,91 +81,67 @@ public class RedSpy : MonoBehaviour
     {
         if (other.CompareTag("Guard"))
         {
-            while(speedBoostCount <= maxSpeedBoosts)
+            currentState = SpyState.SpeedBoost;
+            ApplySpeedBoost();
+            StartCoroutine(RemoveSpeedBoost(3.0f));
+            UpdateUIText();
+
+            if (other.CompareTag("Document"))
             {
-                currentState = SpyState.SpeedBoost;
-                ApplySpeedBoost();
-                StartCoroutine(RemoveSpeedBoost(3.0f));
-                UpdateUIText();
-            }
-            StopMovingForDuration(6.0f);
-            //if (speedBoostCount >= maxSpeedBoosts)
-            //{
-            //    currentState = SpyState.SpeedBoost;
-            //    ApplySpeedBoost();
-            //    StartCoroutine(RemoveSpeedBoost(3.0f));
-            //    UpdateUIText();
-            //}
-            //else
-            //{
-            //    StopMovingForDuration(6.0f);
-            //}
-        }
-        else
-        if (other.CompareTag("Document"))
-        {
-            DestroyDocument(other.gameObject);
-        }
-    }
-    void ApplySpeedBoost()
-    {
-        currentMovementSpeed += 5.0f;
-        currentState = SpyState.SpeedBoost;
-        UpdateUIText();
-    }
-    IEnumerator RemoveSpeedBoost(float timeToHaveBoost)
-    {
-        yield return new WaitForSeconds(timeToHaveBoost);
-        currentMovementSpeed -= 5.0f;
-        currentState = SpyState.SpeedBoost;
-        UpdateUIText();
-        StartCoroutine(Wait());
-    }
-    IEnumerator StopMovingForDuration(float duration)
-    {
-        currentMovementSpeed = 0.0f;
-        yield return new WaitForSeconds(duration);
-        currentMovementSpeed = baseMovementSpeed;
-        currentState = SpyState.Captured;
-        UpdateUIText();
-        StartCoroutine(Wait());
-    }
-    void DestroyDocument(GameObject document)
-    {
-        Destroy(document);
-        currentState = SpyState.DestroyedDocument;
-        UpdateUIText();
-        StartCoroutine(Wait());
-    }
-    void UpdateUIAfterEvent()
-    {
-        currentState = SpyState.Spying;
-        UpdateUIText();
-    }
-    IEnumerator Wait()
-    {
-        yield return new WaitForSeconds(2.0f);
-        UpdateUIAfterEvent();
-    }
-    void UpdateUIText()
-    {
-        if (uiText != null)
-        {
-            switch (currentState)
-            {
-                case SpyState.Spying:
-                    uiText.text = "Red Spy: Spying";
-                    break;
-                case SpyState.SpeedBoost:
-                    uiText.text = "Red Spy: Evading with Glitching through the Matrix";
-                    break;
-                case SpyState.Captured:
-                    uiText.text = "Red Spy: Captured";
-                    break;
-                case SpyState.DestroyedDocument:
-                    uiText.text = "Red Spy: Document Destroyed";
-                    break;
+                DestroyDocument(other.gameObject);
             }
         }
     }
-}
+        void ApplySpeedBoost()
+        {
+            currentMovementSpeed += 5.0f;
+            currentState = SpyState.SpeedBoost;
+            UpdateUIText();
+        }
+        IEnumerator RemoveSpeedBoost(float timeToHaveBoost)
+        {
+            yield return new WaitForSeconds(timeToHaveBoost);
+            currentMovementSpeed -= 5.0f;
+            currentState = SpyState.SpeedBoost;
+            UpdateUIText();
+            StartCoroutine(Wait());
+        }
+        void DestroyDocument(GameObject document)
+        {
+            Destroy(document);
+            currentState = SpyState.DestroyedDocument;
+            UpdateUIText();
+            StartCoroutine(Wait());
+        }
+        void UpdateUIAfterEvent()
+        {
+            currentState = SpyState.Spying;
+            UpdateUIText();
+        }
+        IEnumerator Wait()
+        {
+            yield return new WaitForSeconds(2.0f);
+            UpdateUIAfterEvent();
+        }
+        void UpdateUIText()
+        {
+            if (uiText != null)
+            {
+                switch (currentState)
+                {
+                    case SpyState.Spying:
+                        uiText.text = "Red Spy: Spying";
+                        break;
+                    case SpyState.SpeedBoost:
+                        uiText.text = "Red Spy: Evading with Glitching through the Matrix";
+                        break;
+                    case SpyState.Captured:
+                        uiText.text = "Red Spy: Captured";
+                        break;
+                    case SpyState.DestroyedDocument:
+                        uiText.text = "Red Spy: Document Destroyed";
+                        break;
+                }
+            }
+        }
+    }

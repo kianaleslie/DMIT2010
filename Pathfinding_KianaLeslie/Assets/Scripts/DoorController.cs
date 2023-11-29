@@ -32,14 +32,14 @@ public class DoorController : MonoBehaviour
             isOpen = true;
         }
     }
-    public bool IsOpen()
-    {
-        return isOpen;
-    }
-    public bool IsClosed()
-    {
-        return isOpen = false;
-    }
+    //public bool IsOpen()
+    //{
+    //    return isOpen;
+    //}
+    //public bool IsClosed()
+    //{
+    //    return isOpen = false;
+    //}
     private IEnumerator MoveDoorTimer()
     {
         while (isOpen == true)
