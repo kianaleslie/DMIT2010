@@ -31,10 +31,6 @@ public class DoorController : MonoBehaviour
         {
             isOpen = true;
         }
-        if (other.CompareTag("Guard"))
-        {
-            isOpen = false;
-        }
     }
     public bool IsOpen()
     {

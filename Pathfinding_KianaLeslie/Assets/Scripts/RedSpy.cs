@@ -16,7 +16,8 @@ public class RedSpy : MonoBehaviour
 
     [SerializeField] float baseMovementSpeed;
     float currentMovementSpeed;
-
+    int speedBoostCount = 0;
+    int maxSpeedBoosts = 3;
     [SerializeField] TMP_Text uiText;
 
     enum SpyState
@@ -82,10 +83,25 @@ public class RedSpy : MonoBehaviour
     {
         if (other.CompareTag("Guard"))
         {
-            currentState = SpyState.SpeedBoost;
-            ApplySpeedBoost();
-            StartCoroutine(RemoveSpeedBoost(3.0f));
-            UpdateUIText();
+            while(speedBoostCount <= maxSpeedBoosts)
+            {
+                currentState = SpyState.SpeedBoost;
+                ApplySpeedBoost();
+                StartCoroutine(RemoveSpeedBoost(3.0f));
+                UpdateUIText();
+            }
+            StopMovingForDuration(6.0f);
+            //if (speedBoostCount >= maxSpeedBoosts)
+            //{
+            //    currentState = SpyState.SpeedBoost;
+            //    ApplySpeedBoost();
+            //    StartCoroutine(RemoveSpeedBoost(3.0f));
+            //    UpdateUIText();
+            //}
+            //else
+            //{
+            //    StopMovingForDuration(6.0f);
+            //}
         }
         else
         if (other.CompareTag("Document"))
@@ -105,7 +121,7 @@ public class RedSpy : MonoBehaviour
         currentMovementSpeed -= 5.0f;
         currentState = SpyState.SpeedBoost;
         UpdateUIText();
-        StartCoroutine(WaitAfterSpeedBoost());
+        StartCoroutine(Wait());
     }
     IEnumerator StopMovingForDuration(float duration)
     {
@@ -114,33 +130,24 @@ public class RedSpy : MonoBehaviour
         currentMovementSpeed = baseMovementSpeed;
         currentState = SpyState.Captured;
         UpdateUIText();
+        StartCoroutine(Wait());
     }
     void DestroyDocument(GameObject document)
     {
         Destroy(document);
         currentState = SpyState.DestroyedDocument;
         UpdateUIText();
-        StartCoroutine(WaitAfterDocument());
+        StartCoroutine(Wait());
     }
-    void UpdateUIAfterDocument()
+    void UpdateUIAfterEvent()
     {
         currentState = SpyState.Spying;
         UpdateUIText();
     }
-    IEnumerator WaitAfterDocument()
+    IEnumerator Wait()
     {
         yield return new WaitForSeconds(2.0f);
-        UpdateUIAfterDocument();
-    }
-    void UpdateUIAfterSpeedBoost()
-    {
-        currentState = SpyState.Spying;
-        UpdateUIText();
-    }
-    IEnumerator WaitAfterSpeedBoost()
-    {
-        yield return new WaitForSeconds(2.0f);
-        UpdateUIAfterDocument();
+        UpdateUIAfterEvent();
     }
     void UpdateUIText()
     {
