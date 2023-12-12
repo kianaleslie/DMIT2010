@@ -37,15 +37,12 @@ public class AIController : MonoBehaviour
 
     AIState waterAIState = AIState.Walking;
     AIState fireAIState = AIState.Walking;
-    FireState currentFlame = FireState.PinkFlame;
+    FireState currentFlame = FireState.BlueFlame;
 
     private void Start()
     {
         SetAISpeed(waterAI, waterAIWalkingSpeed);
         SetAISpeed(fireAI, fireAIWalkingSpeed);
-        yellowFire.SetActive(false);
-        pinkFire.SetActive(false);
-        blueFire.SetActive(false);
     }
     private void Update()
     {
@@ -133,30 +130,19 @@ public class AIController : MonoBehaviour
         switch (currentFlame)
         {
             case FireState.PinkFlame:
-                if (waterAIState == AIState.Throwing)
-                {
-                    Instantiate(pinkFire, fireSpawn.transform.position, Quaternion.identity);
-                }
-                else if (fireAIState == AIState.Throwing)
-                {
-                    Instantiate(pinkFire, fireSpawn.transform.position, Quaternion.identity);
-                }
+
+                Instantiate(pinkFire, fireSpawn.transform.position, Quaternion.identity);
+
                 break;
             case FireState.YellowFlame:
-                if (waterAIState == AIState.Throwing)
-                {
-                    Instantiate(blueFire, fireSpawn.transform.position, Quaternion.identity);
-                }
-                else if (fireAIState == AIState.Throwing)
-                {
-                    Instantiate(yellowFire, fireSpawn.transform.position, Quaternion.identity);
-                }
+
+                Instantiate(blueFire, fireSpawn.transform.position, Quaternion.identity);
+
                 break;
             case FireState.BlueFlame:
-                if (waterAIState == AIState.Throwing)
-                {
-                    Instantiate(blueFire, fireSpawn.transform.position, Quaternion.identity);
-                }
+
+                Instantiate(blueFire, fireSpawn.transform.position, Quaternion.identity);
+
                 break;
             default:
                 break;
@@ -177,5 +163,4 @@ public class AIController : MonoBehaviour
     {
         agent.transform.Rotate(Vector3.up, 360.0f * Time.deltaTime);
     }
-    
 }
