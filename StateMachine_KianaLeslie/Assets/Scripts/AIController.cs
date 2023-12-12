@@ -51,6 +51,7 @@ public class AIController : MonoBehaviour
     {
         WaterAIState();
         FireAIState();
+        SpawnFire();
         switch (waterAIState)
         {
             case AIState.Walking:
@@ -86,38 +87,6 @@ public class AIController : MonoBehaviour
             default:
                 break;
         }
-
-        switch (currentFlame)
-        {
-            case FireState.YellowFlame:
-                yellowFire.SetActive(true);
-                pinkFire.SetActive(false);
-                blueFire.SetActive(false);
-                break;
-            case FireState.PinkFlame:
-                pinkFire.SetActive(true);
-                yellowFire.SetActive(false);
-                blueFire.SetActive(false);
-                break;
-            case FireState.BlueFlame:
-                blueFire.SetActive(true);
-                pinkFire.SetActive(false);
-                yellowFire.SetActive(false);
-                break;
-            default:
-                break;
-        }
-    }
-    void SetAISpeed(NavMeshAgent agent, float speed)
-    {
-        agent.speed = speed;
-    }
-    void MoveAI(NavMeshAgent agent, Vector3 destination)
-    {
-        if(!agent.hasPath || (agent.hasPath && agent.remainingDistance < 0.5f))
-        {
-            agent.SetDestination(destination);
-        }
     }
     void WaterAIState()
     {
@@ -125,7 +94,7 @@ public class AIController : MonoBehaviour
         {
             case FireState.YellowFlame:
                 waterAIState = AIState.Dancing;
-                //
+                Dance(waterAI);
                 break;
             case FireState.PinkFlame:
                 waterAIState = AIState.Walking;
@@ -153,27 +122,60 @@ public class AIController : MonoBehaviour
                 break;
             case FireState.BlueFlame:
                 fireAIState = AIState.Dancing;
-                //
+                Dance(fireAI);
                 break;
             default:
                 break;
         }
     }
-    void InteractWithFire()
+    void SpawnFire()
     {
         switch (currentFlame)
         {
-            case FireState.YellowFlame:
-                yellowFire.SetActive(true);
-                break;
             case FireState.PinkFlame:
-                pinkFire.SetActive(true);
+                if (waterAIState == AIState.Throwing)
+                {
+                    Instantiate(pinkFire, fireSpawn.transform.position, Quaternion.identity);
+                }
+                else if (fireAIState == AIState.Throwing)
+                {
+                    Instantiate(pinkFire, fireSpawn.transform.position, Quaternion.identity);
+                }
+                break;
+            case FireState.YellowFlame:
+                if (waterAIState == AIState.Throwing)
+                {
+                    Instantiate(blueFire, fireSpawn.transform.position, Quaternion.identity);
+                }
+                else if (fireAIState == AIState.Throwing)
+                {
+                    Instantiate(yellowFire, fireSpawn.transform.position, Quaternion.identity);
+                }
                 break;
             case FireState.BlueFlame:
-                blueFire.SetActive(true);
+                if (waterAIState == AIState.Throwing)
+                {
+                    Instantiate(blueFire, fireSpawn.transform.position, Quaternion.identity);
+                }
                 break;
             default:
-                break;  
+                break;
         }
     }
+    void SetAISpeed(NavMeshAgent agent, float speed)
+    {
+        agent.speed = speed;
+    }
+    void MoveAI(NavMeshAgent agent, Vector3 destination)
+    {
+        if (!agent.hasPath || (agent.hasPath && agent.remainingDistance < 0.5f))
+        {
+            agent.SetDestination(destination);
+        }
+    }
+    void Dance(NavMeshAgent agent)
+    {
+        agent.transform.Rotate(Vector3.up, 360.0f * Time.deltaTime);
+    }
+    
 }
