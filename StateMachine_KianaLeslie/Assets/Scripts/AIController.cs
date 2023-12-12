@@ -1,11 +1,24 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class AIController : MonoBehaviour
 {
-    [SerializeField] GameObject waterAI;
-    [SerializeField] GameObject fireAI;
+    [SerializeField] public NavMeshAgent waterAI;
+    [SerializeField] public NavMeshAgent fireAI;
+    [SerializeField] public GameObject waterObject;
+    [SerializeField] public GameObject fireWoodObject;
+
+    [SerializeField] public GameObject fireSpawn;
+    [SerializeField] public GameObject yellowFire;
+    [SerializeField] public GameObject pinkFire;
+    [SerializeField] public GameObject blueFire;
+
+    float waterAIWalkingSpeed = 4.0f;
+    float fireAIWalkingSpeed = 6.0f;
+    float waterAIrunningSpeed = 6.0f;
+    float fireAIrunningSpeed = 8.0f;
 
     enum AIState
     {
@@ -22,4 +35,145 @@ public class AIController : MonoBehaviour
         BlueFlame
     }
 
+    AIState waterAIState = AIState.Walking;
+    AIState fireAIState = AIState.Walking;
+    FireState currentFlame = FireState.PinkFlame;
+
+    private void Start()
+    {
+        SetAISpeed(waterAI, waterAIWalkingSpeed);
+        SetAISpeed(fireAI, fireAIWalkingSpeed);
+        yellowFire.SetActive(false);
+        pinkFire.SetActive(false);
+        blueFire.SetActive(false);
+    }
+    private void Update()
+    {
+        WaterAIState();
+        FireAIState();
+        switch (waterAIState)
+        {
+            case AIState.Walking:
+                SetAISpeed(waterAI, waterAIWalkingSpeed);
+                break;
+            case AIState.Running:
+                SetAISpeed(waterAI, waterAIrunningSpeed);
+                break;
+            case AIState.Dancing:
+                break;
+            case AIState.Collecting:
+                break;
+            case AIState.Throwing:
+                break;
+            default:
+                break;
+        }
+
+        switch (fireAIState)
+        {
+            case AIState.Walking:
+                SetAISpeed(fireAI, fireAIWalkingSpeed);
+                break;
+            case AIState.Running:
+                SetAISpeed(fireAI, fireAIrunningSpeed);
+                break;
+            case AIState.Dancing:
+                break;
+            case AIState.Collecting:
+                break;
+            case AIState.Throwing:
+                break;
+            default:
+                break;
+        }
+
+        switch (currentFlame)
+        {
+            case FireState.YellowFlame:
+                yellowFire.SetActive(true);
+                pinkFire.SetActive(false);
+                blueFire.SetActive(false);
+                break;
+            case FireState.PinkFlame:
+                pinkFire.SetActive(true);
+                yellowFire.SetActive(false);
+                blueFire.SetActive(false);
+                break;
+            case FireState.BlueFlame:
+                blueFire.SetActive(true);
+                pinkFire.SetActive(false);
+                yellowFire.SetActive(false);
+                break;
+            default:
+                break;
+        }
+    }
+    void SetAISpeed(NavMeshAgent agent, float speed)
+    {
+        agent.speed = speed;
+    }
+    void MoveAI(NavMeshAgent agent, Vector3 destination)
+    {
+        if(!agent.hasPath || (agent.hasPath && agent.remainingDistance < 0.5f))
+        {
+            agent.SetDestination(destination);
+        }
+    }
+    void WaterAIState()
+    {
+        switch (currentFlame)
+        {
+            case FireState.YellowFlame:
+                waterAIState = AIState.Dancing;
+                //
+                break;
+            case FireState.PinkFlame:
+                waterAIState = AIState.Walking;
+                MoveAI(waterAI, fireSpawn.transform.position);
+                break;
+            case FireState.BlueFlame:
+                waterAIState = AIState.Running;
+                MoveAI(waterAI, waterObject.transform.position);
+                break;
+            default:
+                break;
+        }
+    }
+    void FireAIState()
+    {
+        switch (currentFlame)
+        {
+            case FireState.YellowFlame:
+                fireAIState = AIState.Running;
+                MoveAI(fireAI, fireWoodObject.transform.position);
+                break;
+            case FireState.PinkFlame:
+                fireAIState = AIState.Walking;
+                MoveAI(fireAI, fireSpawn.transform.position);
+                break;
+            case FireState.BlueFlame:
+                fireAIState = AIState.Dancing;
+                //
+                break;
+            default:
+                break;
+        }
+    }
+    void InteractWithFire()
+    {
+        switch (currentFlame)
+        {
+            case FireState.YellowFlame:
+                yellowFire.SetActive(true);
+                break;
+            case FireState.PinkFlame:
+                pinkFire.SetActive(true);
+                break;
+            case FireState.BlueFlame:
+                blueFire.SetActive(true);
+                break;
+            default:
+                break;  
+        }
+    }
 }
