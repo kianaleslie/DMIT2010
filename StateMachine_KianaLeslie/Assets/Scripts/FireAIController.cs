@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -20,12 +21,19 @@ public class FireAIController : MonoBehaviour
     [SerializeField] public GameObject pinkFire;
     [SerializeField] public GameObject blueFire;
 
+    [SerializeField] public GameObject[] flameColours;
+    GameObject currentFlameObject;
+
+    [SerializeField] public TMP_Text uiText;
+
     //speeds for each state
     float fireAIWalkingSpeed = 4.0f;
     float fireAIrunningSpeed = 6.0f;
 
     float pickUpRange = 5.0f;
     float pickUpForce = 150.0f;
+
+    int currentColorIndex = 0;
 
     //condition check for object collection
     bool hasFireWoodObject = false;
@@ -54,7 +62,7 @@ public class FireAIController : MonoBehaviour
 
     private void Start()
     {
-        SpawnFire();
+        StartCoroutine(ChangeFlameColour(10.0f));
     }
     private void Update()
     {
@@ -64,12 +72,15 @@ public class FireAIController : MonoBehaviour
         {
             case AIState.Walking:
                 SetAISpeed(fireAI, fireAIWalkingSpeed);
+                UpdateUIText();
                 break;
             case AIState.Running:
                 SetAISpeed(fireAI, fireAIrunningSpeed);
+                UpdateUIText();
                 break;
             case AIState.Dancing:
                 Dance(fireAI);
+                UpdateUIText();
                 break;
             case AIState.Collecting:
                 //if (currentFlame == FireState.Ignited || currentFlame == FireState.YellowFlame)
@@ -100,31 +111,60 @@ public class FireAIController : MonoBehaviour
                 //        MoveObject();
                 //    }
                 //}
-                if (currentFlame == FireState.PinkFlame)
+                //if (currentFlame == FireState.PinkFlame)
+                //{
+                //    fireAIState = AIState.Walking;
+                //    MoveAI(fireAI, fireWoodObject.transform.position);
+                //    if (hasFireWoodObject)
+                //    {
+                //        MoveAI(fireAI, fireSpawn.transform.position);
+                //    }
+                //}
+                //if (currentFlame == FireState.YellowFlame)
+                //{
+                //    fireAIState = AIState.Running;
+                //    MoveAI(fireAI, fireWoodObject.transform.position);
+                //    if (hasFireWoodObject)
+                //    {
+                //        MoveAI(fireAI, fireSpawn.transform.position);
+                //    }
+                //}
+                //UpdateUIText();
+                if (currentFlame == FireState.PinkFlame || currentFlame == FireState.BlueFlame)
                 {
-                    fireAIState = AIState.Walking;
-                    MoveAI(fireAI, fireWoodObject.transform.position);
+                    MoveAITowards(fireAI, fireWoodObject.transform.position);
+
                     if (hasFireWoodObject)
                     {
-                        MoveAI(fireAI, fireSpawn.transform.position);
+                        MoveAITowards(fireAI, fireSpawn.transform.position);
                     }
                 }
-                if (currentFlame == FireState.YellowFlame)
+                else if (currentFlame == FireState.YellowFlame)
                 {
-                    fireAIState = AIState.Running;
-                    MoveAI(fireAI, fireWoodObject.transform.position);
+                    MoveAITowards(fireAI, fireWoodObject.transform.position);
+
                     if (hasFireWoodObject)
                     {
-                        MoveAI(fireAI, fireSpawn.transform.position);
+                        if (Vector3.Distance(fireAI.transform.position, fireSpawn.transform.position) > 1.0f)
+                        {
+                            MoveAITowards(fireAI, fireSpawn.transform.position);
+                        }
+                        else
+                        {
+                            fireAIState = AIState.Throwing;
+                        }
                     }
                 }
+                UpdateUIText();
                 break;
             case AIState.Throwing:
                 //ThrowObject();
+                UpdateUIText();
                 break;
             default:
                 break;
         }
+
     }
     private void OnCollisionEnter(Collision collision)
     {
@@ -177,31 +217,31 @@ public class FireAIController : MonoBehaviour
                 break;
         }
     }
-    void SpawnFire()
-    {
-        switch (currentFlame)
-        {
-            case FireState.Ignited:
-                //
-                break;
-            case FireState.YellowFlame:
-                Instantiate(yellowFire, fireSpawn.transform.position, Quaternion.identity);
-                break;
-            case FireState.PinkFlame:
-                Instantiate(pinkFire, fireSpawn.transform.position, Quaternion.identity);
-                break;
-            case FireState.BlueFlame:
-                Instantiate(blueFire, fireSpawn.transform.position, Quaternion.identity);
-                break;
-            case FireState.Extinguished:
-                Destroy(yellowFire);
-                Destroy(pinkFire);
-                Destroy(blueFire);
-                break;
-            default:
-                break;
-        }
-    }
+    //void SpawnFire()
+    //{
+    //    switch (currentFlame)
+    //    {
+    //        case FireState.Ignited:
+    //            //
+    //            break;
+    //        case FireState.YellowFlame:
+    //            Instantiate(yellowFire, fireSpawn.transform.position, Quaternion.identity);
+    //            break;
+    //        case FireState.PinkFlame:
+    //            Instantiate(pinkFire, fireSpawn.transform.position, Quaternion.identity);
+    //            break;
+    //        case FireState.BlueFlame:
+    //            Instantiate(blueFire, fireSpawn.transform.position, Quaternion.identity);
+    //            break;
+    //        case FireState.Extinguished:
+    //            Destroy(yellowFire);
+    //            Destroy(pinkFire);
+    //            Destroy(blueFire);
+    //            break;
+    //        default:
+    //            break;
+    //    }
+    //}
     void SetAISpeed(NavMeshAgent agent, float speed)
     {
         //the ai will either be running or walking
@@ -210,6 +250,13 @@ public class FireAIController : MonoBehaviour
     void MoveAI(NavMeshAgent agent, Vector3 destination)
     {
         //move the ai to the specified destination 
+        if (agent.enabled)
+        {
+            agent.SetDestination(destination);
+        }
+    }
+    void MoveAITowards(NavMeshAgent agent, Vector3 destination)
+    {
         if (agent.enabled)
         {
             agent.SetDestination(destination);
@@ -250,4 +297,53 @@ public class FireAIController : MonoBehaviour
     //    heldObjectRb.transform.parent = null;
     //    heldObj = null;
     //}
+    IEnumerator ChangeFlameColour(float delayInSeconds)
+    {
+        yield return new WaitForSeconds(delayInSeconds);
+
+        if (currentFlameObject != null)
+        {
+            Destroy(currentFlameObject);
+        }
+        ChangeFlameColour();
+        StartCoroutine(ChangeFlameColour(10f));
+    }
+    void ChangeFlameColour()
+    {
+        if (flameColours.Length > 0)
+        {
+            currentFlame = (FireState)currentColorIndex;
+
+            if (currentFlameObject != null)
+            {
+                Destroy(currentFlameObject);
+            }
+            currentFlameObject = Instantiate(flameColours[currentColorIndex], fireSpawn.transform.position, Quaternion.identity);
+            currentColorIndex = (currentColorIndex + 1) % flameColours.Length;
+        }
+    }
+    void UpdateUIText()
+    {
+        if (uiText != null)
+        {
+            switch (fireAIState)
+            {
+                case AIState.Walking:
+                    uiText.text = "fire ai: Walking";
+                    break;
+                case AIState.Running:
+                    uiText.text = "fire ai: Running";
+                    break;
+                case AIState.Dancing:
+                    uiText.text = "fire ai: Dancing";
+                    break;
+                case AIState.Collecting:
+                    uiText.text = "fire ai: Collecting";
+                    break;
+                case AIState.Throwing:
+                    uiText.text = "fire ai: Throwing";
+                    break;
+            }
+        }
+    }
 }

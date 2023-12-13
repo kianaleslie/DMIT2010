@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -18,6 +20,10 @@ public class WaterAIController : MonoBehaviour                                  
     [SerializeField] public GameObject yellowFire;
     [SerializeField] public GameObject pinkFire;
     [SerializeField] public GameObject blueFire;
+
+    [SerializeField] public TMP_Text uiText;
+    [SerializeField] public GameObject uiObject;
+    [SerializeField] public TMP_Text pressEText;
 
     //speeds for each state
     float waterAIWalkingSpeed = 5.0f;
@@ -54,6 +60,7 @@ public class WaterAIController : MonoBehaviour                                  
     private void Start()
     {
         SpawnFire();
+        uiObject.SetActive(false);
     }
     private void Update()
     {
@@ -63,12 +70,15 @@ public class WaterAIController : MonoBehaviour                                  
         {
             case AIState.Walking:
                 SetAISpeed(waterAI, waterAIWalkingSpeed);
+                UpdateUIText();
                 break;
             case AIState.Running:
                 SetAISpeed(waterAI, waterAIrunningSpeed);
+                UpdateUIText();
                 break;
             case AIState.Dancing:
                 Dance(waterAI);
+                UpdateUIText();
                 break;
             case AIState.Collecting:
                 if (currentFlame == FireState.BlueFlame)
@@ -100,6 +110,7 @@ public class WaterAIController : MonoBehaviour                                  
                         MoveObject();
                     }
                 }
+                UpdateUIText();
                 //if (currentFlame == FireState.PinkFlame)
                 //{
                 //    waterAIState = AIState.Walking;
@@ -130,12 +141,24 @@ public class WaterAIController : MonoBehaviour                                  
                 break;
             case AIState.Throwing:
                 ThrowObject();
+                UpdateUIText();
                 break;
             default:
                 break;
         }
-
-
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            if (uiObject.activeSelf)
+            {
+                uiObject.SetActive(false);
+                Time.timeScale = 1f;
+            }
+            else
+            {
+                uiObject.SetActive(true);
+                Time.timeScale = 0f;
+            }
+        }
     }
 
     void WaterAIState()
@@ -245,5 +268,29 @@ public class WaterAIController : MonoBehaviour                                  
 
         heldObjectRb.transform.parent = null;
         waterBucketObject = null;
+    }
+    void UpdateUIText()
+    {
+        if (uiText != null)
+        {
+            switch (waterAIState)
+            {
+                case AIState.Walking:
+                    uiText.text = "water ai: Walking";
+                    break;
+                case AIState.Running:
+                    uiText.text = "water ai: Running";
+                    break;
+                case AIState.Dancing:
+                    uiText.text = "water ai: Dancing";
+                    break;
+                case AIState.Collecting:
+                    uiText.text = "water ai: Collecting";
+                    break;
+                case AIState.Throwing:
+                    uiText.text = "water ai: Throwing";
+                    break;
+            }
+        }
     }
 }
