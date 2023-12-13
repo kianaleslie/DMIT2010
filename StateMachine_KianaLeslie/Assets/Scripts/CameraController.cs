@@ -30,6 +30,10 @@ public class CameraController : MonoBehaviour
         {
             birdsEyeCamera.enabled = true;
         }
+        if(kb.escapeKey.wasPressedThisFrame)
+        {
+            Application.Quit();
+        }
     }
 
     void ToggleCameras()

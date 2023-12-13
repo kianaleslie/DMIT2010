@@ -107,7 +107,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5717168279994101084}
   - component: {fileID: 5717168279994101087}
-  - component: {fileID: 5717168279994101086}
   - component: {fileID: 5717168279994101085}
   m_Layer: 0
   m_Name: AI Player
@@ -165,20 +164,6 @@ NavMeshAgent:
   m_BaseOffset: 1
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &5717168279994101086
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5717168279994101083}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2076374dbc109a644a98f747bad4aaab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  waterAI: {fileID: 0}
-  fireAI: {fileID: 0}
 --- !u!54 &5717168279994101085
 Rigidbody:
   m_ObjectHideFlags: 0
