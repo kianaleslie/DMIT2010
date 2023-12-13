@@ -37,7 +37,7 @@ public class AIController : MonoBehaviour
 
     AIState waterAIState = AIState.Walking;
     AIState fireAIState = AIState.Walking;
-    FireState currentFlame = FireState.BlueFlame;
+    FireState currentFlame = FireState.YellowFlame;
 
     private void Start()
     {
@@ -136,7 +136,7 @@ public class AIController : MonoBehaviour
                 break;
             case FireState.YellowFlame:
 
-                Instantiate(blueFire, fireSpawn.transform.position, Quaternion.identity);
+                Instantiate(yellowFire, fireSpawn.transform.position, Quaternion.identity);
 
                 break;
             case FireState.BlueFlame:
