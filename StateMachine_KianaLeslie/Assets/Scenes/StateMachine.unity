@@ -3679,7 +3679,7 @@ GameObject:
   - component: {fileID: 734229740}
   - component: {fileID: 734229739}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: InstructionCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4668,6 +4668,57 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 451560, guid: 5578b82f17c954843901e8b68ca21dcc, type: 3}
   m_PrefabInstance: {fileID: 914507341}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &936726740
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 936726742}
+  - component: {fileID: 936726741}
+  m_Layer: 0
+  m_Name: FireController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &936726741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 936726740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7f46a556109a0e46b19203464d4a770, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fireSpawn: {fileID: 1635362071}
+  yellowFire: {fileID: 6360420542703049433, guid: 8fcb9d2d43929c04f8c70c38581418d4, type: 3}
+  pinkFire: {fileID: 7539522403395165278, guid: cfd52433c2081db47b83623fd9394d6f, type: 3}
+  blueFire: {fileID: 5987572886358014243, guid: 923791c7c386b014dab87eb63f30018d, type: 3}
+  isChangeState: 1
+  canCallWait: 1
+  currentFlameState: 2
+--- !u!4 &936726742
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 936726740}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &947019628
 GameObject:
   m_ObjectHideFlags: 0
@@ -4716,7 +4767,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -4731,8 +4782,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.5029354, y: 1, z: 2.041236}
-  m_Center: {x: -0.20223713, y: 0, z: 0.0063672066}
+  m_Size: {x: 3.4315338, y: 1, z: 3.0683107}
+  m_Center: {x: -0.29631424, y: 0, z: 0.020881176}
 --- !u!1001 &969778881
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5213,7 +5264,7 @@ GameObject:
   - component: {fileID: 1123265177}
   m_Layer: 0
   m_Name: Water
-  m_TagString: Untagged
+  m_TagString: WaterBucket
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5692,7 +5743,7 @@ GameObject:
   - component: {fileID: 1207308881}
   - component: {fileID: 1207308880}
   m_Layer: 5
-  m_Name: Canvas
+  m_Name: ECanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6455,7 +6506,7 @@ Rigidbody:
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 1
-  m_IsKinematic: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -6467,10 +6518,10 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1315221090}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 3, y: 1, z: 3}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1350328463
 PrefabInstance:
@@ -7765,7 +7816,7 @@ GameObject:
   - component: {fileID: 1596951740}
   m_Layer: 0
   m_Name: Bucket
-  m_TagString: Untagged
+  m_TagString: WaterBucket
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -8399,14 +8450,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waterAI: {fileID: 1611546426}
   waterBucketObject: {fileID: 1315221090}
-  holdArea: {fileID: 564468908}
-  fireSpawn: {fileID: 1635362071}
-  yellowFire: {fileID: 6360420542703049433, guid: 8fcb9d2d43929c04f8c70c38581418d4, type: 3}
-  pinkFire: {fileID: 7539522403395165278, guid: cfd52433c2081db47b83623fd9394d6f, type: 3}
-  blueFire: {fileID: 5987572886358014243, guid: 923791c7c386b014dab87eb63f30018d, type: 3}
+  currentFlame: {fileID: 936726741}
+  text: {fileID: 1712839308}
   uiText: {fileID: 1572970503}
   uiObject: {fileID: 734229738}
   pressEText: {fileID: 857255594}
+  waterAIWalkingSpeed: 0
+  waterAIrunningSpeed: 0
+--- !u!65 &1611546433
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7791473}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2, y: 5, z: 2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1612065141
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8691,11 +8754,11 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1635362071}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 6.6565323, y: 3.5998273, z: 5.314171}
-  m_Center: {x: -0.44936037, y: 1.2999136, z: -0.248209}
+  m_Size: {x: 6.6565323, y: 3.5998273, z: 6.4066586}
+  m_Center: {x: -0.44936037, y: 1.2999136, z: -0.46907735}
 --- !u!114 &1635362075
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9380,12 +9443,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fireAI: {fileID: 1712839303}
   fireWoodObject: {fileID: 947019628}
-  fireSpawn: {fileID: 1635362071}
-  yellowFire: {fileID: 6360420542703049433, guid: 8fcb9d2d43929c04f8c70c38581418d4, type: 3}
-  pinkFire: {fileID: 7539522403395165278, guid: cfd52433c2081db47b83623fd9394d6f, type: 3}
-  blueFire: {fileID: 5987572886358014243, guid: 923791c7c386b014dab87eb63f30018d, type: 3}
-  flameColours: []
+  currentFlame: {fileID: 936726741}
   uiText: {fileID: 1380290151}
+  fireAIWalkingSpeed: 0
+  fireAIrunningSpeed: 0
+--- !u!65 &1712839310
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 271525747}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2, y: 5, z: 2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1766020118
 PrefabInstance:
   m_ObjectHideFlags: 0
