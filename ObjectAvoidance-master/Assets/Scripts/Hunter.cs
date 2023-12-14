@@ -107,11 +107,11 @@ public class Hunter : MonoBehaviour
                         transform.rotation = Quaternion.LookRotation(Vector3.RotateTowards(transform.forward, target.transform.position - transform.position, 1, 1));
                     }
 
-                    if (Vector3.Distance(target.transform.position, transform.position) < 2.0f)
-                    {
-                        target.SetActive(false);
-                        target = null;
-                    }
+                    //if (Vector3.Distance(target.transform.position, transform.position) < 2.0f)
+                    //{
+                    //    target.SetActive(false);
+                    //    target = null;
+                    //}
                 }
             }
             else

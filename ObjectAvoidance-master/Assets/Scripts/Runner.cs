@@ -11,18 +11,18 @@ public class Runner : MonoBehaviour
     [SerializeField] GameObject target;
     [SerializeField] GameObject runnerPrefab;
     [SerializeField] GameObject disguisePrefab;
-    //[SerializeField] Vector3 scaleRunnerPrefab = new Vector3(0.01f, 0.01f, 0.01f);
-    //[SerializeField] Vector3 runnerScaleBack = new Vector3(1.0f, 1.0f, 1.0f);
-    //[SerializeField] Transform runnerT;
+    [SerializeField] Vector3 scaleRunnerPrefab = new Vector3(0.01f, 0.01f, 0.01f);
+    [SerializeField] Vector3 runnerScaleBack = new Vector3(1.0f, 1.0f, 1.0f);
+    [SerializeField] Transform runnerT;
 
     RaycastHit hit;
     bool isLeft;
     bool isRight;
-    //bool isDisguised = false;
+    bool isDisguised = false;
 
     void Start()
     {
-        //runnerT = runnerPrefab.transform;
+        runnerT = runnerPrefab.transform;
     }
     void Update()
     {
@@ -58,34 +58,34 @@ public class Runner : MonoBehaviour
             collision.gameObject.SetActive(false);
             StartCoroutine(RemoveSpeedBoost(4.0f));
         }
-        //else
-        //     if (collision.gameObject.CompareTag("Disguise") && !isDisguised)
-        //{
-        //    if (LineOfSight(collision.gameObject.transform))
-        //    {
-        //        //move towards the disguise object
-        //        Vector3 direction = collision.gameObject.transform.position - transform.position;
-        //        direction.y = 0;
-        //        transform.rotation = Quaternion.LookRotation(direction.normalized);
-        //    }
-        //    if (disguisePrefab != null)
-        //    {
-        //        //get position of the target (runner)
-        //        Vector3 targetPosition = runnerPrefab.transform.position;
+        else
+             if (collision.gameObject.CompareTag("Disguise") && !isDisguised)
+        {
+            if (LineOfSight(collision.gameObject.transform))
+            {
+                //move towards the disguise object
+                Vector3 direction = collision.gameObject.transform.position - transform.position;
+                direction.y = 0;
+                transform.rotation = Quaternion.LookRotation(direction.normalized);
+            }
+            if (disguisePrefab != null)
+            {
+                //get position of the runner
+                Vector3 targetPosition = runnerPrefab.transform.position;
 
-        //instantiate at target position
-        //runnerT.localScale = scaleRunnerPrefab;
-        //Instantiate(disguisePrefab, targetPosition, Quaternion.identity);
-        //isDisguised = true;
-        //collision.gameObject.SetActive(false);
-        //StartCoroutine(RevertDisguise(5.0f));
-        //}
-        //runnerPrefab.SetActive(false);
-        //disguisePrefab.SetActive(true);
-        //isDisguised = true;
-        //collision.gameObject.SetActive(false);
-        //StartCoroutine(RevertDisguise(5.0f));
-        //}
+                //instantiate at runner position
+                runnerT.localScale = scaleRunnerPrefab;
+                Instantiate(disguisePrefab, targetPosition, Quaternion.identity);
+                isDisguised = true;
+                collision.gameObject.SetActive(false);
+                StartCoroutine(RevertDisguise());
+            }
+            runnerPrefab.SetActive(true);
+            disguisePrefab.SetActive(true);
+            isDisguised = true;
+            collision.gameObject.SetActive(false);
+            StartCoroutine(RevertDisguise());
+        }
     }
     void AvoidWalls()
     {
@@ -138,11 +138,11 @@ public class Runner : MonoBehaviour
                         transform.rotation = Quaternion.LookRotation(Vector3.RotateTowards(transform.forward, target.transform.position - transform.position, 1, 1));
                     }
 
-                    if (Vector3.Distance(target.transform.position, transform.position) < 2.0f)
-                    {
-                        target.SetActive(false);
-                        target = null;
-                    }
+                    //if (Vector3.Distance(target.transform.position, transform.position) < 2.0f)
+                    //{
+                    //    target.SetActive(false);
+                    //    target = null;
+                    //}
                 }
             }
             else
@@ -188,12 +188,12 @@ public class Runner : MonoBehaviour
         }
         return false;
     }
-    //IEnumerator RevertDisguise(float duration)
-    //{
-    //    yield return new WaitForSeconds(duration);
+    IEnumerator RevertDisguise()
+    {
+        yield return new WaitForSeconds(5.0f);
 
-    //    disguisePrefab.SetActive(false);
-    //    runnerT.localScale = runnerScaleBack;
-    //    isDisguised = false;
-    //}
+        disguisePrefab.SetActive(false);
+        runnerT.localScale = runnerScaleBack;
+        isDisguised = false;
+    }
 }
