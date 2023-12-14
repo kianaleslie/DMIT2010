@@ -17,6 +17,7 @@ public class WaterAIController : MonoBehaviour
     [SerializeField] public TMP_Text uiText;
     [SerializeField] public GameObject uiObject;
     [SerializeField] public TMP_Text pressEText;
+    [SerializeField] AudioSource bgMusic;
 
     //speeds for each state
     public float waterAIWalkingSpeed;
@@ -138,6 +139,7 @@ public class WaterAIController : MonoBehaviour
                 uiText.enabled = true;
                 pressEText.enabled = true;
                 text.uiText.enabled = true;
+                bgMusic.Play();
             }
             else
             {
@@ -146,6 +148,7 @@ public class WaterAIController : MonoBehaviour
                 uiText.enabled = false;
                 pressEText.enabled = false;
                 text.uiText.enabled = false;
+                bgMusic.Pause();
             }
         }
     }
